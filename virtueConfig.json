@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "projectName": "aterlier-bookings",
+  "projectDescription": "A boutique creative studio booking and client-management web app used to test Virtue Engine project creation, Architect Flow orchestration, chained workplans, UI direction, QA gates, and bounded repair workflows.",
+  "projectType": "web",
+  "projectCategory": "service-business",
+  "workspaceProfile": "web",
+  "framework": {
+    "name": "next",
+    "language": "javascript",
+    "appRouter": true,
+    "srcDirectory": false,
+    "tailwind": false,
+    "linter": "eslint",
+    "reactCompiler": false,
+    "importAlias": "@/*",
+    "createNextApp": {
+      "package": "create-next-app@latest",
+      "flags": [
+        "--js",
+        "--eslint",
+        "--app",
+        "--no-tailwind",
+        "--no-agents-md",
+        "--disable-git",
+        "--use-npm",
+        "--yes"
+      ]
+    }
+  },
+  "repository": {
+    "remoteUrl": "https://github.com/VIRTUE-CREATION-AND-DEVELOPMENT-INC/atelier-bookings.git"
+  },
+  "createdBy": "Virtue Engine",
+  "createdAt": "2026-06-11T00:31:27.395Z",
+  "notes": ""
+}
