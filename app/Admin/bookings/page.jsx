@@ -127,6 +127,10 @@ function BookingDetailPanel({ booking }) {
         <h3>Internal note</h3>
         <p>{booking.internalNotes}</p>
       </div>
+
+      <Link className={styles.detailAction} href={`/Admin/bookings/${booking.id}`}>
+        Open full review
+      </Link>
     </aside>
   );
 }

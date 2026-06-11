@@ -3,6 +3,7 @@ import {
   ADMIN_BOOKING_STATUS_OPTIONS,
   DASHBOARD_REFERENCE_DATE,
   adminDashboardMetrics,
+  getAdminBookingById,
   listAdminBookings,
 } from "@/lib/admin/mockStudioData";
 
@@ -238,6 +239,51 @@ const toInboxBooking = (booking) => ({
   updatedAtLabel: formatDateTime(booking.updatedAt),
 });
 
+const buildTimelineEvents = (booking) =>
+  [
+    {
+      dateTime: booking.createdAt,
+      description: `Inquiry came in from ${booking.source || "an unknown source"}.`,
+      label: formatDateTime(booking.createdAt),
+      title: "Inquiry received",
+    },
+    booking.repliedAt
+      ? {
+          dateTime: booking.repliedAt,
+          description: "Studio response was logged in the mock record.",
+          label: formatDateTime(booking.repliedAt),
+          title: "First reply sent",
+        }
+      : {
+          dateTime: booking.createdAt,
+          description: "No reply is logged yet. Keep this visible for follow-up.",
+          label: "Awaiting reply",
+          title: "Reply pending",
+        },
+    booking.lastContactedAt
+      ? {
+          dateTime: booking.lastContactedAt,
+          description: "Most recent studio contact point.",
+          label: formatDateTime(booking.lastContactedAt),
+          title: "Last contacted",
+        }
+      : null,
+    {
+      dateTime: `${booking.desiredDate}T12:00:00.000Z`,
+      description: `${booking.timelineLabel || "Client preferred timing"} for the selected service.`,
+      label: formatLongDate(`${booking.desiredDate}T12:00:00.000Z`),
+      title: "Preferred date",
+    },
+    booking.updatedAt
+      ? {
+          dateTime: booking.updatedAt,
+          description: "Latest mock admin movement on this inquiry.",
+          label: formatDateTime(booking.updatedAt),
+          title: "Record updated",
+        }
+      : null,
+  ].filter(Boolean);
+
 export function getBookingInboxContent({ query = "", selectedId, status = "all" } = {}) {
   const normalizedQuery = query.trim().toLowerCase();
   const statusValues = new Set(ADMIN_BOOKING_STATUS_OPTIONS.map((option) => option.value));
@@ -298,5 +344,73 @@ export function getBookingInboxContent({ query = "", selectedId, status = "all" 
         value: inboxItems.filter((booking) => booking.repliedLabel === "Awaiting reply").length,
       },
     ],
+  };
+}
+
+export function getBookingDetailContent(bookingId) {
+  const booking = getAdminBookingById(bookingId);
+  const activeBookings = listAdminBookings({ includeArchived: false });
+
+  if (!booking || booking.status === ADMIN_BOOKING_STATUSES.archived) {
+    return {
+      booking: null,
+      hero: {
+        eyebrow: "Booking review",
+        title: "Booking inquiry unavailable",
+        description:
+          "This mock booking detail could not be found in the active studio queue.",
+      },
+      relatedBookings: activeBookings.slice(0, 3).map(toInboxBooking),
+    };
+  }
+
+  const detail = toInboxBooking(booking);
+  const relatedBookings = activeBookings
+    .filter((candidate) => candidate.clientId === booking.clientId && candidate.id !== booking.id)
+    .slice(0, 3)
+    .map(toInboxBooking);
+
+  return {
+    booking: {
+      ...detail,
+      client: {
+        ...detail.client,
+        tags: detail.client.tags,
+      },
+      createdAtLabel: formatDateTime(booking.createdAt),
+      preferences: [
+        {
+          label: "Preferred date",
+          value: detail.desiredDate.label,
+        },
+        {
+          label: "Timeline",
+          value: detail.timelineLabel,
+        },
+        {
+          label: "Source",
+          value: booking.source,
+        },
+        {
+          label: "Priority",
+          value: `${booking.priority} priority`,
+        },
+      ],
+      service: {
+        ...detail.service,
+        summary: booking.service?.summary || "Selected studio service.",
+      },
+      statusOptions: ADMIN_BOOKING_STATUS_OPTIONS.filter(
+        (option) => option.value !== ADMIN_BOOKING_STATUSES.archived,
+      ),
+      timeline: buildTimelineEvents(booking),
+    },
+    hero: {
+      eyebrow: "Booking review",
+      title: detail.projectName,
+      description:
+        "Review client context, service fit, notes, timeline, and local-only status movement before the next studio follow-up.",
+    },
+    relatedBookings,
   };
 }

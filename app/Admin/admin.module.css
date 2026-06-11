@@ -608,7 +608,11 @@
 .filterForm button:focus-visible,
 .filterLink:focus-visible,
 .bookingMain a:focus-visible,
-.panelBadge:focus-visible {
+.panelBadge:focus-visible,
+.detailAction:focus-visible,
+.statusChoice:focus-visible,
+.secondaryButton:focus-visible,
+.relatedList a:focus-visible {
   outline: 3px solid rgba(52, 87, 73, 0.36);
   outline-offset: 3px;
 }
@@ -934,6 +938,328 @@
   color: #1f4d3d;
 }
 
+.detailAction,
+.secondaryButton {
+  min-height: 2.7rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #1f4d3d;
+  border-radius: 0.45rem;
+  padding: 0 0.95rem;
+  background: #1f4d3d;
+  color: #fffaf1;
+  font: inherit;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.secondaryButton {
+  width: 100%;
+  background: rgba(255, 250, 241, 0.72);
+  color: #1f4d3d;
+}
+
+.secondaryButton:disabled {
+  border-color: rgba(66, 53, 40, 0.12);
+  background: rgba(66, 53, 40, 0.06);
+  color: #8a8174;
+  cursor: not-allowed;
+}
+
+.bookingDetailPage {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.bookingDetailPage :is(h1, h2, h3, p) {
+  margin: 0;
+}
+
+.detailHero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(14rem, 18rem);
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.detailHero > div:first-child,
+.detailHeroAside {
+  border: 1px solid rgba(66, 53, 40, 0.15);
+  border-radius: 0.5rem;
+  background: rgba(255, 250, 241, 0.86);
+  box-shadow: 0 1.25rem 3rem rgba(45, 34, 23, 0.08);
+}
+
+.detailHero > div:first-child {
+  min-height: 15rem;
+  display: grid;
+  align-content: end;
+  gap: 0.8rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.detailHero h1 {
+  max-width: 14ch;
+  font-size: clamp(2.35rem, 5.8vw, 4.85rem);
+  line-height: 0.98;
+}
+
+.detailHero p:not(.eyebrow) {
+  max-width: 48rem;
+  color: #5e564b;
+  font-size: clamp(1rem, 1.4vw, 1.12rem);
+  line-height: 1.65;
+}
+
+.detailHeroAside {
+  display: grid;
+  align-content: end;
+  justify-items: start;
+  gap: 0.45rem;
+  padding: 1.25rem;
+}
+
+.detailHeroAside span:not(.statusBadge) {
+  color: #1f4d3d;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.detailHeroAside small {
+  color: #72695d;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.detailOverviewGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.bookingReviewGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(20rem, 0.75fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.reviewMainColumn,
+.reviewAsideColumn,
+.noteStack,
+.statusControlPanel {
+  display: grid;
+  gap: 1rem;
+}
+
+.reviewAsideColumn {
+  position: sticky;
+  top: 1rem;
+}
+
+.reviewList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.reviewList div {
+  min-width: 0;
+  display: grid;
+  gap: 0.3rem;
+  border: 1px solid rgba(66, 53, 40, 0.12);
+  border-radius: 0.45rem;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.36);
+}
+
+.reviewList dt,
+.localStatusNotice small,
+.statusChoice small,
+.relatedList span {
+  color: #72695d;
+}
+
+.reviewList dt {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.reviewList dd {
+  margin: 0;
+  color: #28231d;
+  font-weight: 800;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.reviewCopy,
+.emptyCopy {
+  color: #4c443a;
+  line-height: 1.58;
+}
+
+.emptyCopy {
+  font-size: 0.95rem;
+}
+
+.noteStack div {
+  display: grid;
+  gap: 0.45rem;
+  border-top: 1px solid rgba(66, 53, 40, 0.12);
+  padding-top: 1rem;
+}
+
+.noteStack div:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.noteStack h3 {
+  color: #28231d;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.noteStack p {
+  color: #4c443a;
+  line-height: 1.58;
+}
+
+.reviewTimeline {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.reviewTimeline li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.75rem;
+  border-top: 1px solid rgba(66, 53, 40, 0.12);
+  padding: 0.9rem 0;
+}
+
+.reviewTimeline li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.reviewTimeline li:last-child {
+  padding-bottom: 0;
+}
+
+.reviewTimeline li > span {
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-top: 0.35rem;
+  border: 2px solid #fffaf1;
+  border-radius: 999px;
+  background: #1f4d3d;
+  box-shadow: 0 0 0 2px rgba(52, 87, 73, 0.22);
+}
+
+.reviewTimeline div {
+  min-width: 0;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.reviewTimeline strong,
+.relatedList strong {
+  color: #28231d;
+}
+
+.reviewTimeline time {
+  color: #72695d;
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.reviewTimeline p,
+.localStatusNotice p {
+  color: #4c443a;
+  line-height: 1.55;
+}
+
+.localStatusNotice {
+  display: grid;
+  gap: 0.35rem;
+  border: 1px solid rgba(52, 87, 73, 0.18);
+  border-radius: 0.45rem;
+  padding: 0.9rem;
+  background: rgba(52, 87, 73, 0.08);
+}
+
+.localStatusNotice strong {
+  color: #1f4d3d;
+  font-size: 1.1rem;
+  line-height: 1.2;
+}
+
+.localStatusNotice small {
+  line-height: 1.35;
+}
+
+.statusButtonGrid,
+.relatedList {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.statusChoice {
+  min-width: 0;
+  display: grid;
+  gap: 0.25rem;
+  border: 1px solid rgba(66, 53, 40, 0.13);
+  border-radius: 0.45rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.4);
+  color: #28231d;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.statusChoice span {
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.statusChoice small {
+  line-height: 1.35;
+}
+
+.statusChoice:hover,
+.statusChoiceActive {
+  border-color: rgba(31, 77, 61, 0.38);
+  background: rgba(52, 87, 73, 0.1);
+}
+
+.relatedList a {
+  min-width: 0;
+  display: grid;
+  gap: 0.3rem;
+  border: 1px solid rgba(66, 53, 40, 0.12);
+  border-radius: 0.45rem;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.36);
+}
+
+.relatedList a:hover {
+  border-color: rgba(31, 77, 61, 0.34);
+  background: rgba(255, 250, 241, 0.95);
+}
+
 .emptyState {
   display: grid;
   gap: 0.65rem;
@@ -972,11 +1298,14 @@
   .dashboardGrid,
   .hero,
   .inboxHero,
-  .inboxGrid {
+  .inboxGrid,
+  .detailHero,
+  .bookingReviewGrid {
     grid-template-columns: 1fr;
   }
 
-  .inboxAside {
+  .inboxAside,
+  .reviewAsideColumn {
     position: static;
   }
 
@@ -1010,7 +1339,9 @@
   .metricsGrid,
   .inboxHeroStats,
   .filterForm,
-  .detailMetaGrid {
+  .detailMetaGrid,
+  .detailOverviewGrid,
+  .reviewList {
     grid-template-columns: 1fr;
   }
 
