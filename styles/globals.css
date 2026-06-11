@@ -1,1 +1,55 @@
+@import "./tokens.css";
+@import "./typography.css";
+@import "./motion.css";
 
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  background: var(--color-page);
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--color-ink);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(141, 161, 127, 0.22), transparent 28rem),
+    linear-gradient(180deg, var(--color-paper) 0%, var(--color-page) 38%, var(--color-paper) 100%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  color: var(--color-paper);
+  background: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 4px;
+}
+
+.public-main {
+  min-height: 70vh;
+}
