@@ -31,6 +31,8 @@ behavior remain out of scope.
 - Page-specific section titles and descriptions stay in the route adapter.
 - `app/components/composites/content/ContentCollectionSection.jsx` provides a
   reusable section heading pattern for content-backed sections.
+- `app/Admin/content.js` maps local admin booking records, status labels,
+  service labels, and option labels into dashboard rows.
 
 ## Future CMS Replacement Notes
 

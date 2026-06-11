@@ -1,5 +1,5 @@
 import {
-  getBookingOptionGroups,
+  getBookingOptionGroupSections,
   getPublicStudioProfile,
   listFeaturedGalleryItems,
   listFeaturedTestimonials,
@@ -10,7 +10,9 @@ import {
 const profile = getPublicStudioProfile();
 
 export const metadata = {
-  title: profile.seo.title,
+  title: {
+    absolute: profile.seo.title,
+  },
   description: profile.seo.description,
 };
 
@@ -47,8 +49,6 @@ const toFaqCard = (faq) => ({
 });
 
 export async function getHomePageContent() {
-  const bookingOptions = getBookingOptionGroups();
-
   return {
     profile,
     hero: {
@@ -89,21 +89,7 @@ export async function getHomePageContent() {
       title: "Inquiry choices ready for a future form",
       description:
         "Service, timeline, budget, contact, and project goal options are grouped from the same local collection that a future CMS can replace.",
-      groups: [
-        { id: "services", label: "Services", options: bookingOptions.services },
-        { id: "timelines", label: "Timelines", options: bookingOptions.timelines },
-        { id: "budgets", label: "Budgets", options: bookingOptions.budgets },
-        {
-          id: "contact-methods",
-          label: "Contact methods",
-          options: bookingOptions.contactMethods,
-        },
-        {
-          id: "project-goals",
-          label: "Project goals",
-          options: bookingOptions.projectGoals,
-        },
-      ],
+      groups: getBookingOptionGroupSections(),
     },
     faqs: {
       id: "faqs",
