@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "projectName": "aterlier-bookings",
+  "projectName": "atelier-bookings",
   "projectDescription": "A boutique creative studio booking and client-management web app used to test Virtue Engine project creation, Architect Flow orchestration, chained workplans, UI direction, QA gates, and bounded repair workflows.",
   "projectType": "web",
   "projectCategory": "service-business",
