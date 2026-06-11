@@ -28,4 +28,15 @@
   --space-page-x: clamp(1rem, 4vw, 3rem);
   --space-section-y: clamp(4.5rem, 9vw, 8rem);
   --space-section-y-compact: clamp(3rem, 6vw, 5rem);
+  --color-canvas: var(--color-page);
+  --color-surface-strong: var(--color-soft);
+  --color-text: var(--color-ink);
+  --color-border: var(--color-line);
+  --color-forest: var(--color-accent-strong);
+  --color-gold: #d5a84f;
+  --radius-large: var(--radius-sm);
+  --radius-card: var(--radius-sm);
+  --radius-control: 999px;
+  --page-max: var(--container-wide);
+  --focus-ring: 0 0 0 4px rgba(95, 117, 87, 0.24);
 }
