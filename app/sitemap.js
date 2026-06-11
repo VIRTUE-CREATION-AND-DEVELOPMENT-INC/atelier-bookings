@@ -13,25 +13,7 @@ export default function sitemap() {
       priority: 1,
     },
     {
-      url: `${origin}/services`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${origin}/gallery`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
       url: `${origin}/about`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    {
-      url: `${origin}/contact`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.6,
@@ -40,7 +22,25 @@ export default function sitemap() {
       url: `${origin}/booking`,
       lastModified: new Date(),
       changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    {
+      url: `${origin}/contact`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
+      url: `${origin}/gallery`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
       priority: 0.7,
+    },
+    {
+      url: `${origin}/services`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
     },
   ];
 }
