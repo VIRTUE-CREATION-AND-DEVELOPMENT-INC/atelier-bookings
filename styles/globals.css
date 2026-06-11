@@ -1,1 +1,33 @@
+@import "./tokens.css";
+@import "./typography.css";
+@import "./motion.css";
 
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-canvas);
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #f7f4ee 0%, #fffdf8 46%, #eef2ed 100%);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: rgba(123, 63, 47, 0.24);
+}

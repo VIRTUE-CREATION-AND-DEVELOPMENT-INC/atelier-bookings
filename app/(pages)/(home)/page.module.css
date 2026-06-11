@@ -1,0 +1,436 @@
+.pageShell {
+  min-height: 100vh;
+  padding: 48px 20px 72px;
+}
+
+.hero,
+.bookingPanel {
+  width: min(100%, var(--page-max));
+  margin: 0 auto;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 390px);
+  gap: 28px;
+  align-items: end;
+  padding: 40px 0 34px;
+}
+
+.heroContent {
+  max-width: 780px;
+}
+
+.kicker {
+  margin: 0 0 12px;
+  color: var(--color-accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  max-width: 760px;
+  margin: 0;
+  color: var(--color-text);
+  font-family: var(--font-serif);
+  font-size: 5.8rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 0.93;
+}
+
+.heroIntro {
+  max-width: 620px;
+  margin: 24px 0 0;
+  color: var(--color-muted);
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.expectationCard {
+  border: 1px solid rgba(56, 82, 69, 0.24);
+  border-radius: var(--radius-card);
+  background: rgba(255, 253, 248, 0.82);
+  box-shadow: var(--shadow-card);
+  padding: 24px;
+}
+
+.expectationCard p {
+  margin: 0 0 14px;
+  color: var(--color-forest);
+  font-weight: 800;
+}
+
+.expectationCard ul,
+.deliverableList {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.expectationCard li,
+.deliverableList li {
+  position: relative;
+  padding-left: 18px;
+  color: var(--color-muted);
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.expectationCard li::before,
+.deliverableList li::before {
+  position: absolute;
+  top: 0.62em;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  content: "";
+}
+
+.bookingPanel {
+  padding: 30px;
+  border: 1px solid rgba(216, 206, 192, 0.95);
+  border-radius: var(--radius-large);
+  background: rgba(255, 253, 248, 0.78);
+  box-shadow: var(--shadow-soft);
+}
+
+.sectionHeader {
+  display: grid;
+  gap: 10px;
+  max-width: 700px;
+  margin: 0 0 28px;
+}
+
+.sectionHeader h2,
+.selectionSummary h3 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.sectionHeader p:last-child {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.selectionLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
+  gap: 24px;
+  align-items: start;
+}
+
+.serviceFieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.serviceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.serviceCard {
+  position: relative;
+  display: grid;
+  min-height: 330px;
+  gap: 16px;
+  align-content: start;
+  padding: 22px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease,
+    background-color 180ms ease;
+}
+
+.serviceCard:hover {
+  border-color: rgba(123, 63, 47, 0.42);
+  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
+}
+
+.serviceCard[data-selected="true"] {
+  border-color: var(--color-accent);
+  background: linear-gradient(180deg, #fffdf8 0%, #f7efe5 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(123, 63, 47, 0.18),
+    var(--shadow-card);
+}
+
+.serviceInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.serviceCard:has(.serviceInput:focus-visible) {
+  outline: none;
+  box-shadow: var(--focus-ring), var(--shadow-card);
+}
+
+.cardTopline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--color-accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.cardTitle {
+  display: block;
+  max-width: 16ch;
+  color: var(--color-text);
+  font-family: var(--font-serif);
+  font-size: 2.05rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.cardSummary {
+  display: block;
+  color: var(--color-muted);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.metaList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.metaList span {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding-top: 12px;
+  border-top: 1px solid rgba(216, 206, 192, 0.8);
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.metaList strong {
+  color: var(--color-text);
+  font-size: 0.76rem;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.fitList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.fitList span {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  border: 1px solid rgba(56, 82, 69, 0.22);
+  border-radius: var(--radius-control);
+  padding: 6px 10px;
+  background: rgba(241, 234, 223, 0.55);
+  color: var(--color-forest);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.selectionSummary {
+  position: sticky;
+  top: 20px;
+  display: grid;
+  gap: 18px;
+  border: 1px solid rgba(56, 82, 69, 0.28);
+  border-radius: var(--radius-card);
+  background: #eef2ed;
+  padding: 24px;
+}
+
+.selectionSummary h3 {
+  font-size: 2.3rem;
+}
+
+.summaryContent {
+  display: grid;
+  gap: 22px;
+}
+
+.summaryName {
+  margin: 0 0 8px;
+  color: var(--color-text);
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.summaryDescription {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.summaryStats {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.summaryStats div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+  padding: 12px 0;
+  border-top: 1px solid rgba(56, 82, 69, 0.18);
+}
+
+.summaryStats dt {
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.summaryStats dd {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.summarySubhead {
+  margin: 0 0 12px;
+  color: var(--color-forest);
+  font-weight: 800;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  border: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 980px) {
+  .hero,
+  .selectionLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    align-items: start;
+  }
+
+  .selectionSummary {
+    position: static;
+  }
+
+  .hero h1 {
+    font-size: 4.8rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .pageShell {
+    padding: 28px 14px 44px;
+  }
+
+  .hero {
+    padding: 24px 0;
+  }
+
+  .hero h1 {
+    font-size: 3.4rem;
+  }
+
+  .sectionHeader h2 {
+    font-size: 2.35rem;
+  }
+
+  .selectionSummary h3 {
+    font-size: 2rem;
+  }
+
+  .cardTitle {
+    font-size: 1.8rem;
+  }
+
+  .expectationCard,
+  .bookingPanel,
+  .selectionSummary,
+  .serviceCard {
+    padding: 18px;
+  }
+
+  .serviceGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .serviceCard {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 430px) {
+  .metaList {
+    grid-template-columns: 1fr;
+  }
+
+  .cardTopline {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .serviceCard {
+    transition: none;
+  }
+
+  .serviceCard:hover {
+    transform: none;
+  }
+}
