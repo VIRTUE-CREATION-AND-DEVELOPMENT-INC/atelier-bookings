@@ -3,17 +3,17 @@ import Link from "next/link";
 import styles from "./admin.module.css";
 
 const navItems = [
-  { href: "#dashboard", label: "Dashboard" },
-  { href: "#pending", label: "Pending" },
-  { href: "#dates", label: "Preferred dates" },
-  { href: "#activity", label: "Activity" },
+  { href: "/Admin", label: "Dashboard" },
+  { href: "/Admin/bookings", label: "Booking inbox" },
+  { href: "/Admin#dates", label: "Preferred dates" },
+  { href: "/Admin#activity", label: "Activity" },
 ];
 
 export default function AdminLayout({ children }) {
   return (
     <div className={styles.adminRoot}>
       <a className={styles.skipLink} href="#admin-main">
-        Skip to dashboard
+        Skip to admin content
       </a>
 
       <div className={styles.shell}>
@@ -38,12 +38,12 @@ export default function AdminLayout({ children }) {
             <span>Admin</span>
             <strong>Booking management</strong>
           </div>
-          <nav className={styles.navList} aria-label="Dashboard navigation">
+          <nav className={styles.navList} aria-label="Admin navigation">
             {navItems.map((item) => (
-              <a className={styles.navLink} href={item.href} key={item.href}>
+              <Link className={styles.navLink} href={item.href} key={item.href}>
                 <span aria-hidden="true" />
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
         </aside>

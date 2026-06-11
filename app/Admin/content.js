@@ -27,6 +27,10 @@ const statusLabels = new Map(
   ADMIN_BOOKING_STATUS_OPTIONS.map((option) => [option.value, option.label]),
 );
 
+const statusDescriptions = new Map(
+  ADMIN_BOOKING_STATUS_OPTIONS.map((option) => [option.value, option.description]),
+);
+
 const formatDate = (value, options = {}) =>
   new Intl.DateTimeFormat("en-US", {
     day: "numeric",
@@ -44,6 +48,15 @@ const formatDateTime = (value) =>
     timeZone: "UTC",
   }).format(new Date(value));
 
+const formatLongDate = (value) =>
+  new Intl.DateTimeFormat("en-US", {
+    day: "numeric",
+    month: "long",
+    timeZone: "UTC",
+    weekday: "long",
+    year: "numeric",
+  }).format(new Date(value));
+
 const formatCurrency = (cents) =>
   new Intl.NumberFormat("en-US", {
     currency: "USD",
@@ -52,6 +65,8 @@ const formatCurrency = (cents) =>
   }).format(cents / 100);
 
 const getStatusLabel = (status) => statusLabels.get(status) || status;
+
+const getStatusDescription = (status) => statusDescriptions.get(status) || "Booking inquiry status.";
 
 const getActivityMessage = (booking) => {
   if (booking.status === ADMIN_BOOKING_STATUSES.new) {
@@ -159,5 +174,129 @@ export function getAdminDashboardContent() {
     recentActivity,
     statusCounts,
     upcomingPreferredDates,
+  };
+}
+
+const getSearchText = (booking) =>
+  [
+    booking.projectName,
+    booking.message,
+    booking.source,
+    booking.timelineLabel,
+    booking.priority,
+    getStatusLabel(booking.status),
+    booking.client?.company,
+    booking.client?.contactName,
+    booking.client?.email,
+    booking.client?.location,
+    booking.service?.name,
+    booking.service?.category,
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+
+const toInboxBooking = (booking) => ({
+  client: {
+    company: booking.client?.company || "Unknown client",
+    contactName: booking.client?.contactName || "Unassigned contact",
+    email: booking.client?.email || "No email on file",
+    location: booking.client?.location || "Location pending",
+    phone: booking.client?.phone || "No phone on file",
+    tags: booking.client?.tags || [],
+  },
+  createdAtLabel: formatDateTime(booking.createdAt),
+  desiredDate: {
+    dateTime: booking.desiredDate,
+    label: formatLongDate(`${booking.desiredDate}T12:00:00.000Z`),
+    shortLabel: formatDate(`${booking.desiredDate}T12:00:00.000Z`, {
+      weekday: "short",
+      year: "numeric",
+    }),
+  },
+  estimatedValue: formatCurrency(booking.estimatedValueCents),
+  id: booking.id,
+  internalNotes: booking.internalNotes,
+  lastContactedLabel: booking.lastContactedAt ? formatDateTime(booking.lastContactedAt) : "Not contacted",
+  message: booking.message,
+  priority: booking.priority,
+  projectName: booking.projectName,
+  repliedLabel: booking.repliedAt ? formatDateTime(booking.repliedAt) : "Awaiting reply",
+  service: {
+    category: booking.service?.category || "Studio",
+    deliverables: booking.service?.deliverables || [],
+    durationLabel: booking.service?.durationLabel || "Date pending",
+    name: booking.service?.name || "Studio booking",
+  },
+  source: booking.source,
+  status: {
+    description: getStatusDescription(booking.status),
+    label: getStatusLabel(booking.status),
+    value: booking.status,
+  },
+  timelineLabel: booking.timelineLabel,
+  updatedAtLabel: formatDateTime(booking.updatedAt),
+});
+
+export function getBookingInboxContent({ query = "", selectedId, status = "all" } = {}) {
+  const normalizedQuery = query.trim().toLowerCase();
+  const statusValues = new Set(ADMIN_BOOKING_STATUS_OPTIONS.map((option) => option.value));
+  const activeStatus = statusValues.has(status) ? status : "all";
+  const allBookings = listAdminBookings({ includeArchived: false });
+  const filteredBookings = allBookings
+    .filter((booking) => activeStatus === "all" || booking.status === activeStatus)
+    .filter((booking) => !normalizedQuery || getSearchText(booking).includes(normalizedQuery));
+  const inboxItems = filteredBookings.map(toInboxBooking);
+  const selectedBooking =
+    inboxItems.find((booking) => booking.id === selectedId) || inboxItems[0] || null;
+  const statusCounts = new Map(
+    ADMIN_BOOKING_STATUS_OPTIONS.map((option) => [
+      option.value,
+      allBookings.filter((booking) => booking.status === option.value).length,
+    ]),
+  );
+
+  return {
+    activeStatus,
+    filters: [
+      {
+        count: allBookings.length,
+        label: "All",
+        value: "all",
+      },
+      ...ADMIN_BOOKING_STATUS_OPTIONS.filter(
+        (option) => option.value !== ADMIN_BOOKING_STATUSES.archived,
+      ).map((option) => ({
+        count: statusCounts.get(option.value) || 0,
+        label: option.label,
+        value: option.value,
+      })),
+    ],
+    hero: {
+      eyebrow: "Booking inbox",
+      title: "Scan every inquiry before it becomes studio work.",
+      description:
+        "Review client context, preferred dates, service fit, status movement, and follow-up needs from one mock operations queue.",
+    },
+    items: inboxItems,
+    query,
+    selectedBooking,
+    summary: [
+      {
+        label: "Showing",
+        meta: activeStatus === "all" ? "All visible inquiries" : getStatusLabel(activeStatus),
+        value: inboxItems.length,
+      },
+      {
+        label: "High priority",
+        meta: "Needs faster review",
+        value: inboxItems.filter((booking) => booking.priority === "high").length,
+      },
+      {
+        label: "Awaiting reply",
+        meta: "No first response logged",
+        value: inboxItems.filter((booking) => booking.repliedLabel === "Awaiting reply").length,
+      },
+    ],
   };
 }

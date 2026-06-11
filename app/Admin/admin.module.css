@@ -461,6 +461,501 @@
   color: #4c443a;
 }
 
+.inbox {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.inbox :is(h1, h2, h3, p) {
+  margin: 0;
+}
+
+.inboxHero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(22rem, 0.72fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.inboxHero > div:first-child,
+.inboxHeroStats,
+.filterPanel {
+  border: 1px solid rgba(66, 53, 40, 0.15);
+  border-radius: 0.5rem;
+  background: rgba(255, 250, 241, 0.86);
+  box-shadow: 0 1.25rem 3rem rgba(45, 34, 23, 0.08);
+}
+
+.inboxHero > div:first-child {
+  min-height: 16rem;
+  display: grid;
+  align-content: end;
+  gap: 0.8rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.inboxHero h1 {
+  max-width: 13ch;
+  font-size: clamp(2.5rem, 6vw, 5.15rem);
+  line-height: 0.96;
+}
+
+.inboxHero p:not(.eyebrow) {
+  max-width: 47rem;
+  color: #5e564b;
+  font-size: clamp(1rem, 1.4vw, 1.12rem);
+  line-height: 1.65;
+}
+
+.inboxHeroStats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.inboxHeroStats div {
+  min-width: 0;
+  display: grid;
+  align-content: space-between;
+  gap: 0.45rem;
+  border: 1px solid rgba(66, 53, 40, 0.12);
+  border-radius: 0.45rem;
+  padding: 0.9rem;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.inboxHeroStats span,
+.inboxHeroStats small,
+.searchField span,
+.bookingTableHead,
+.bookingMain span,
+.bookingMain small,
+.labelStack small,
+.valueStack small,
+.bookingMeta,
+.detailMetaGrid span,
+.detailMetaGrid small,
+.contactList,
+.tagList span {
+  color: #72695d;
+}
+
+.inboxHeroStats span,
+.searchField span,
+.bookingTableHead,
+.detailMetaGrid span {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.inboxHeroStats strong {
+  color: #1f4d3d;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1;
+}
+
+.inboxHeroStats small {
+  line-height: 1.35;
+}
+
+.filterPanel {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1rem, 2vw, 1.25rem);
+}
+
+.filterForm {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: end;
+}
+
+.searchField {
+  min-width: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.searchField input {
+  width: 100%;
+  min-height: 2.8rem;
+  border: 1px solid rgba(66, 53, 40, 0.18);
+  border-radius: 0.45rem;
+  padding: 0 0.85rem;
+  background: rgba(255, 255, 255, 0.7);
+  color: #221f1a;
+  font: inherit;
+}
+
+.filterForm button {
+  min-height: 2.8rem;
+  border: 1px solid #1f4d3d;
+  border-radius: 0.45rem;
+  padding: 0 1rem;
+  background: #1f4d3d;
+  color: #fffaf1;
+  font: inherit;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.searchField input:focus-visible,
+.filterForm button:focus-visible,
+.filterLink:focus-visible,
+.bookingMain a:focus-visible,
+.panelBadge:focus-visible {
+  outline: 3px solid rgba(52, 87, 73, 0.36);
+  outline-offset: 3px;
+}
+
+.statusFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filterLink {
+  min-height: 2.45rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(66, 53, 40, 0.14);
+  border-radius: 999px;
+  padding: 0.35rem 0.45rem 0.35rem 0.8rem;
+  background: rgba(255, 255, 255, 0.42);
+  color: #4c443a;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.filterLink strong {
+  min-width: 1.55rem;
+  min-height: 1.55rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(66, 53, 40, 0.1);
+  color: #28231d;
+  font-size: 0.75rem;
+}
+
+.filterLinkActive {
+  border-color: rgba(31, 77, 61, 0.45);
+  background: rgba(52, 87, 73, 0.12);
+  color: #1f4d3d;
+}
+
+.filterLinkActive strong {
+  background: #1f4d3d;
+  color: #fffaf1;
+}
+
+.inboxGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(20rem, 0.65fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.inboxMain,
+.inboxAside {
+  align-content: start;
+}
+
+.inboxAside {
+  position: sticky;
+  top: 1rem;
+}
+
+.inboxToolbar {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.inboxToolbar h2 {
+  margin-top: 0.25rem;
+  font-size: clamp(1.35rem, 2.5vw, 2rem);
+  line-height: 1.1;
+}
+
+.bookingTable {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.bookingTableHead,
+.bookingRow {
+  display: grid;
+  grid-template-columns: minmax(13rem, 1.3fr) minmax(11rem, 0.9fr) minmax(9rem, 0.7fr) minmax(9rem, 0.7fr);
+  gap: 0.85rem;
+  align-items: start;
+}
+
+.bookingTableHead {
+  padding: 0 0.75rem;
+}
+
+.bookingRow {
+  border: 1px solid rgba(66, 53, 40, 0.13);
+  border-radius: 0.45rem;
+  padding: 0.9rem;
+  background: rgba(255, 255, 255, 0.42);
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.bookingRow:hover,
+.bookingRowSelected {
+  border-color: rgba(31, 77, 61, 0.36);
+  background: rgba(255, 250, 241, 0.95);
+  box-shadow: 0 0.75rem 1.8rem rgba(45, 34, 23, 0.07);
+}
+
+.bookingMain,
+.labelStack,
+.valueStack,
+.bookingStatusCell {
+  min-width: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.bookingMain a {
+  color: #28231d;
+  font-weight: 900;
+  line-height: 1.25;
+  text-decoration: underline;
+  text-decoration-color: rgba(31, 77, 61, 0.3);
+  text-underline-offset: 0.22rem;
+}
+
+.bookingMain span,
+.bookingMain small,
+.labelStack small,
+.valueStack small {
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+
+.servicePill,
+.statusBadge,
+.priorityPill,
+.tagList span {
+  width: fit-content;
+  max-width: 100%;
+  border-radius: 999px;
+  padding: 0.38rem 0.58rem;
+  font-size: 0.75rem;
+  font-weight: 850;
+  line-height: 1.15;
+}
+
+.servicePill {
+  border: 1px solid rgba(159, 106, 53, 0.26);
+  background: rgba(255, 246, 228, 0.72);
+  color: #6d4d2f;
+}
+
+.valueStack time {
+  color: #28231d;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.statusBadge {
+  border: 1px solid rgba(66, 53, 40, 0.14);
+  background: rgba(66, 53, 40, 0.08);
+  color: #4c443a;
+}
+
+.statusNew {
+  border-color: rgba(31, 77, 61, 0.28);
+  background: rgba(52, 87, 73, 0.12);
+  color: #1f4d3d;
+}
+
+.statusReviewing {
+  border-color: rgba(127, 86, 42, 0.28);
+  background: rgba(255, 246, 228, 0.82);
+  color: #6d4d2f;
+}
+
+.statusProposal {
+  border-color: rgba(72, 87, 124, 0.24);
+  background: rgba(228, 234, 245, 0.78);
+  color: #34456a;
+}
+
+.statusConfirmed {
+  border-color: rgba(31, 77, 61, 0.34);
+  background: #1f4d3d;
+  color: #fffaf1;
+}
+
+.statusCompleted {
+  border-color: rgba(66, 53, 40, 0.18);
+  background: rgba(38, 34, 28, 0.9);
+  color: #fffaf1;
+}
+
+.statusDeclined {
+  border-color: rgba(124, 62, 50, 0.24);
+  background: rgba(246, 226, 222, 0.78);
+  color: #71382d;
+}
+
+.priorityPill {
+  border: 1px solid rgba(66, 53, 40, 0.12);
+  color: #4c443a;
+  background: rgba(255, 255, 255, 0.42);
+  text-transform: capitalize;
+}
+
+.priorityHigh {
+  border-color: rgba(124, 62, 50, 0.24);
+  color: #71382d;
+}
+
+.priorityMedium {
+  border-color: rgba(127, 86, 42, 0.22);
+  color: #6d4d2f;
+}
+
+.priorityLow {
+  border-color: rgba(52, 87, 73, 0.18);
+  color: #1f4d3d;
+}
+
+.bookingMessage,
+.bookingMeta {
+  grid-column: 1 / -1;
+}
+
+.bookingMessage {
+  color: #4c443a;
+  line-height: 1.55;
+}
+
+.bookingMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.75rem;
+  border-top: 1px solid rgba(66, 53, 40, 0.1);
+  padding-top: 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.detailHeader {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.detailHeader h2 {
+  margin-top: 0.25rem;
+  font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+  line-height: 1.12;
+}
+
+.detailMetaGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.detailMetaGrid div {
+  min-width: 0;
+  display: grid;
+  gap: 0.25rem;
+  border: 1px solid rgba(66, 53, 40, 0.12);
+  border-radius: 0.45rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.36);
+}
+
+.detailMetaGrid strong {
+  color: #28231d;
+  overflow-wrap: anywhere;
+  line-height: 1.25;
+}
+
+.detailMetaGrid small {
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+
+.detailBlock {
+  display: grid;
+  gap: 0.55rem;
+  border-top: 1px solid rgba(66, 53, 40, 0.12);
+  padding-top: 1rem;
+}
+
+.detailBlock h3 {
+  color: #28231d;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.detailBlock p {
+  color: #4c443a;
+  line-height: 1.58;
+}
+
+.contactList {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding-left: 1rem;
+  line-height: 1.45;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.tagList span {
+  border: 1px solid rgba(52, 87, 73, 0.18);
+  background: rgba(52, 87, 73, 0.08);
+  color: #1f4d3d;
+}
+
+.emptyState {
+  display: grid;
+  gap: 0.65rem;
+  align-content: center;
+  min-height: 12rem;
+  border: 1px dashed rgba(66, 53, 40, 0.24);
+  border-radius: 0.45rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.emptyState h2 {
+  color: #28231d;
+  font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+  line-height: 1.12;
+}
+
+.emptyState p:not(.eyebrow) {
+  color: #4c443a;
+  line-height: 1.55;
+}
+
 @media (max-width: 1040px) {
   .shell {
     grid-template-columns: 1fr;
@@ -475,8 +970,14 @@
   }
 
   .dashboardGrid,
-  .hero {
+  .hero,
+  .inboxHero,
+  .inboxGrid {
     grid-template-columns: 1fr;
+  }
+
+  .inboxAside {
+    position: static;
   }
 
   .statusPanel {
@@ -492,7 +993,9 @@
   .topbar,
   .panelHeader,
   .statusLabel,
-  .requestItem {
+  .requestItem,
+  .inboxToolbar,
+  .detailHeader {
     align-items: stretch;
     flex-direction: column;
   }
@@ -504,7 +1007,10 @@
   }
 
   .navList,
-  .metricsGrid {
+  .metricsGrid,
+  .inboxHeroStats,
+  .filterForm,
+  .detailMetaGrid {
     grid-template-columns: 1fr;
   }
 
@@ -520,16 +1026,34 @@
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
   }
+
+  .bookingTableHead {
+    display: none;
+  }
+
+  .bookingRow {
+    grid-template-columns: 1fr;
+  }
+
+  .bookingStatusCell {
+    align-items: start;
+  }
+
+  .filterForm button {
+    width: 100%;
+  }
 }
 
 @media (min-width: 761px) and (max-width: 1180px) {
-  .metricsGrid {
+  .metricsGrid,
+  .inboxHeroStats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .navLink {
+  .navLink,
+  .bookingRow {
     transition: none;
   }
 
