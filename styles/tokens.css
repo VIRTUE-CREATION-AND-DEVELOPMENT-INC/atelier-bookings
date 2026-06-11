@@ -1,0 +1,31 @@
+:root {
+  --color-page: #f7f2ea;
+  --color-paper: #fffaf2;
+  --color-surface: #fffdf8;
+  --color-ink: #201d18;
+  --color-muted: #6f675d;
+  --color-soft: #e8ddce;
+  --color-line: rgba(32, 29, 24, 0.16);
+  --color-line-strong: rgba(32, 29, 24, 0.32);
+  --color-accent: #5f7557;
+  --color-accent-strong: #2f472f;
+  --color-accent-soft: #dce6d6;
+  --color-clay: #b86f4f;
+  --color-focus: #7d5fff;
+
+  --shadow-soft: 0 22px 70px rgba(32, 29, 24, 0.1);
+  --shadow-card: 0 16px 44px rgba(32, 29, 24, 0.08);
+
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+
+  --container-wide: 1180px;
+  --container: 1040px;
+  --container-narrow: 780px;
+
+  --space-page-x: clamp(1rem, 4vw, 3rem);
+  --space-section-y: clamp(4.5rem, 9vw, 8rem);
+  --space-section-y-compact: clamp(3rem, 6vw, 5rem);
+}

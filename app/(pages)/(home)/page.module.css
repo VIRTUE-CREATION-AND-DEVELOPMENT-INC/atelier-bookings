@@ -1,0 +1,256 @@
+.page {
+  overflow: hidden;
+}
+
+.page :is(h1, h2, h3, p, ol, dl, dd) {
+  margin: 0;
+}
+
+.hero {
+  width: min(var(--container-wide), calc(100% - (var(--space-page-x) * 2)));
+  min-height: calc(100vh - 5.25rem);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.72fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 5rem);
+  padding: clamp(4rem, 8vw, 7rem) 0;
+}
+
+.heroContent {
+  display: grid;
+  gap: clamp(1.1rem, 2vw, 1.6rem);
+}
+
+.heroContent > p:not(.eyebrow) {
+  max-width: 44rem;
+  font-size: clamp(1.08rem, 2vw, 1.32rem);
+}
+
+.eyebrow,
+.cardEyebrow {
+  color: var(--color-accent-strong);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+.heroPanel {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  gap: 1.4rem;
+  padding: clamp(1.3rem, 3vw, 2rem);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(160deg, rgba(255, 253, 248, 0.95), rgba(232, 221, 206, 0.62)),
+    var(--color-surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.heroPanel::before {
+  content: "";
+  position: absolute;
+  inset: 1rem;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--color-accent-soft);
+  transform: rotate(-3deg);
+}
+
+.heroPanelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.heroPanelHeader span,
+.heroPanelHeader strong {
+  color: var(--color-ink);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.heroPanel ol {
+  display: grid;
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.heroPanel li {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem;
+  border: 1px solid rgba(32, 29, 24, 0.1);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 253, 248, 0.66);
+}
+
+.heroPanel li span {
+  color: var(--color-clay);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.heroPanel li p {
+  color: var(--color-ink);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.services,
+.proof {
+  width: min(var(--container-wide), calc(100% - (var(--space-page-x) * 2)));
+  margin: 0 auto;
+  display: grid;
+  gap: clamp(2rem, 5vw, 3.5rem);
+  padding: var(--space-section-y) 0;
+}
+
+.serviceGrid,
+.testimonialGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.serviceCard,
+.testimonialCard {
+  display: grid;
+  align-content: space-between;
+  gap: 2rem;
+  min-height: 100%;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 253, 248, 0.72);
+  box-shadow: var(--shadow-card);
+}
+
+.serviceCard > div:first-child {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.serviceCard p:not(.cardEyebrow),
+.testimonialCard blockquote {
+  color: var(--color-muted);
+}
+
+.serviceCard dl {
+  display: grid;
+  gap: 0.75rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.serviceCard dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.serviceCard dt {
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.serviceCard dd {
+  color: var(--color-ink);
+  font-weight: 800;
+  text-align: right;
+}
+
+.testimonialGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.testimonialCard {
+  gap: 1.5rem;
+  background: var(--color-surface);
+}
+
+.testimonialCard blockquote {
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 2.6vw, 2rem);
+  line-height: 1.16;
+}
+
+.testimonialCard figcaption {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.testimonialCard figcaption strong {
+  color: var(--color-ink);
+}
+
+.testimonialCard figcaption span {
+  color: var(--color-muted);
+}
+
+@media (max-width: 980px) {
+  .hero,
+  .serviceGrid,
+  .testimonialGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    min-height: auto;
+    align-items: start;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero,
+  .services,
+  .proof {
+    width: min(100% - 2rem, var(--container-wide));
+  }
+
+  .hero {
+    padding: 3.4rem 0 2.5rem;
+  }
+
+  .heroActions {
+    width: 100%;
+  }
+
+  .heroActions a {
+    width: 100%;
+  }
+
+  .heroPanel {
+    border-radius: var(--radius-md);
+  }
+
+  .serviceCard dl div {
+    display: grid;
+  }
+
+  .serviceCard dd {
+    text-align: left;
+  }
+}
