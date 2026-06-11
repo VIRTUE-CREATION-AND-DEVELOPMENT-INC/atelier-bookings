@@ -1,0 +1,331 @@
+.page {
+  overflow: hidden;
+}
+
+.page :is(h1, h2, h3, p, ul, figure, figcaption, blockquote) {
+  margin: 0;
+}
+
+.eyebrow,
+.cardEyebrow {
+  color: var(--color-accent-strong);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.hero,
+.gallery,
+.curation,
+.proof {
+  width: min(var(--container-wide), calc(100% - (var(--space-page-x) * 2)));
+  margin: 0 auto;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.42fr);
+  align-items: end;
+  gap: clamp(2rem, 6vw, 5rem);
+  padding: clamp(4rem, 9vw, 7.5rem) 0 var(--space-section-y-compact);
+}
+
+.heroCopy {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.45rem);
+}
+
+.heroCopy > p:not(.eyebrow) {
+  max-width: 49rem;
+  font-size: clamp(1.08rem, 2vw, 1.28rem);
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-top: 0.35rem;
+}
+
+.heroPanel {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.2rem, 3vw, 1.7rem);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(145deg, rgba(220, 230, 214, 0.68), transparent 52%),
+    rgba(255, 253, 248, 0.78);
+  box-shadow: var(--shadow-card);
+}
+
+.heroPanel span {
+  color: var(--color-clay);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.heroPanel ul,
+.paletteList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.48rem;
+  padding: 0;
+  list-style: none;
+}
+
+.heroPanel li,
+.paletteList li {
+  padding: 0.48rem 0.62rem;
+  border: 1px solid rgba(95, 117, 87, 0.28);
+  border-radius: 999px;
+  color: var(--color-accent-strong);
+  background: rgba(220, 230, 214, 0.54);
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.gallery,
+.proof {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3.5rem);
+  padding: var(--space-section-y) 0;
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.galleryCard {
+  display: grid;
+  gap: 1rem;
+}
+
+.galleryCard:first-child,
+.galleryCard:nth-child(4) {
+  grid-column: span 2;
+}
+
+.galleryImage {
+  position: relative;
+  min-height: 17rem;
+  overflow: hidden;
+  aspect-ratio: var(--item-ratio);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(var(--item-angle), transparent 0 50%, rgba(255, 253, 248, 0.5) 50% 100%),
+    radial-gradient(circle at 68% 28%, var(--item-secondary), transparent 8rem),
+    linear-gradient(145deg, var(--item-primary), var(--color-surface));
+  box-shadow: var(--shadow-card);
+}
+
+.galleryImage::before,
+.galleryImage::after,
+.galleryImage span {
+  content: "";
+  position: absolute;
+  border: 1px solid rgba(32, 29, 24, 0.18);
+  background: rgba(255, 253, 248, 0.6);
+}
+
+.galleryImage::before {
+  width: 42%;
+  height: 52%;
+  right: 12%;
+  bottom: 12%;
+  border-radius: 50% 50% var(--radius-md) var(--radius-md);
+}
+
+.galleryImage::after {
+  width: 34%;
+  height: 34%;
+  left: 12%;
+  top: 14%;
+  border-radius: var(--radius-sm);
+  transform: rotate(-8deg);
+}
+
+.galleryImage span {
+  width: 56%;
+  height: 1px;
+  right: 12%;
+  top: 28%;
+  border: 0;
+  background: rgba(32, 29, 24, 0.28);
+  transform: rotate(8deg);
+}
+
+.galleryCard figcaption {
+  display: grid;
+  gap: 0.75rem;
+  padding-inline: 0.15rem;
+}
+
+.galleryCard h2 {
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+}
+
+.galleryCard a,
+.serviceList a {
+  width: fit-content;
+  color: var(--color-ink);
+  font-weight: 850;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.28em;
+}
+
+.galleryCard a:hover,
+.serviceList a:hover {
+  color: var(--color-accent-strong);
+}
+
+.curation {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  padding: clamp(2rem, 5vw, 4rem);
+  border-radius: var(--radius-lg);
+  color: var(--color-paper);
+  background: var(--color-ink);
+  box-shadow: var(--shadow-soft);
+}
+
+.curation h2,
+.curation h3,
+.curation .eyebrow {
+  color: var(--color-paper);
+}
+
+.curation p {
+  color: rgba(255, 250, 242, 0.72);
+}
+
+.curation > div:first-child,
+.serviceList article {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+}
+
+.serviceList {
+  display: grid;
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 250, 242, 0.18);
+  border-radius: var(--radius-md);
+  background: rgba(255, 250, 242, 0.18);
+}
+
+.serviceList article {
+  padding: 1rem;
+  background: rgba(255, 250, 242, 0.08);
+}
+
+.serviceList span {
+  color: var(--color-accent-soft);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+}
+
+.serviceList a {
+  color: var(--color-paper);
+}
+
+.testimonialGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.testimonialCard {
+  display: grid;
+  align-content: start;
+  gap: 1.5rem;
+  padding: clamp(1.2rem, 3vw, 1.65rem);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.testimonialCard blockquote {
+  color: var(--color-muted);
+  font-family: var(--font-serif);
+  font-size: clamp(1.18rem, 2vw, 1.5rem);
+  line-height: 1.18;
+}
+
+.testimonialCard figcaption {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.testimonialCard strong {
+  color: var(--color-ink);
+}
+
+.testimonialCard span {
+  color: var(--color-muted);
+}
+
+@media (max-width: 980px) {
+  .hero,
+  .curation,
+  .testimonialGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .galleryGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .hero,
+  .gallery,
+  .curation,
+  .proof {
+    width: min(100% - 2rem, var(--container-wide));
+  }
+
+  .hero {
+    padding-top: 3.4rem;
+  }
+
+  .heroActions,
+  .heroActions a {
+    width: 100%;
+  }
+
+  .heroPanel,
+  .curation {
+    border-radius: var(--radius-md);
+  }
+
+  .curation {
+    padding: 1.4rem;
+  }
+
+  .galleryCard:first-child,
+  .galleryCard:nth-child(4) {
+    grid-column: auto;
+  }
+
+  .galleryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .galleryImage {
+    min-height: 15rem;
+  }
+}
