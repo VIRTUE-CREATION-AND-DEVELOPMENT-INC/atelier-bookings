@@ -3,6 +3,7 @@ export {
   faqs,
   galleryItems,
   getCallToActionById,
+  getGalleryItemBySlug,
   getGalleryItemsByServiceSlug,
   getPublishedCallsToAction,
   getPublishedFaqs,

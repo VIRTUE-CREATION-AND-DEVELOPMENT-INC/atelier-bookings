@@ -2,7 +2,7 @@
   overflow: hidden;
 }
 
-.page :is(h1, h2, h3, p, ol, dl, dd) {
+.page :is(h1, h2, h3, p, ol, ul, dl, dd, figure, blockquote) {
   margin: 0;
 }
 
@@ -117,7 +117,57 @@
   line-height: 1.35;
 }
 
+.value {
+  width: min(var(--container-wide), calc(100% - (var(--space-page-x) * 2)));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  padding: var(--space-section-y-compact) 0;
+  border-block: 1px solid var(--color-line);
+}
+
+.valueIntro {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+}
+
+.valueContent {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.valueContent > p {
+  max-width: 42rem;
+  font-size: clamp(1.02rem, 1.8vw, 1.18rem);
+}
+
+.valueList {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0;
+  list-style: none;
+}
+
+.valueList li {
+  display: grid;
+  grid-template-columns: minmax(9rem, 0.34fr) minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--color-line);
+}
+
+.valueList h3 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 850;
+  line-height: 1.2;
+}
+
 .services,
+.process,
+.featuredWork,
 .proof {
   width: min(var(--container-wide), calc(100% - (var(--space-page-x) * 2)));
   margin: 0 auto;
@@ -136,7 +186,7 @@
 .serviceCard,
 .testimonialCard {
   display: grid;
-  align-content: space-between;
+  align-content: start;
   gap: 2rem;
   min-height: 100%;
   padding: clamp(1.25rem, 3vw, 1.75rem);
@@ -182,8 +232,186 @@
   text-align: right;
 }
 
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding: 0;
+  list-style: none;
+}
+
+.tagList li {
+  padding: 0.48rem 0.62rem;
+  border: 1px solid rgba(95, 117, 87, 0.28);
+  border-radius: 999px;
+  color: var(--color-accent-strong);
+  background: rgba(220, 230, 214, 0.54);
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.cardLink {
+  align-self: end;
+  width: fit-content;
+  color: var(--color-ink);
+  font-size: 0.9rem;
+  font-weight: 850;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.28em;
+}
+
+.cardLink:hover {
+  color: var(--color-accent-strong);
+}
+
+.process {
+  position: relative;
+  isolation: isolate;
+}
+
+.process::before {
+  content: "";
+  position: absolute;
+  inset: clamp(2rem, 5vw, 4rem) calc(var(--space-page-x) * -1);
+  z-index: -1;
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(135deg, rgba(32, 29, 24, 0.92), rgba(47, 71, 47, 0.86)),
+    var(--color-ink);
+}
+
+.process :is(h2, h3),
+.process > div > p:first-child {
+  color: var(--color-paper);
+}
+
+.process p {
+  color: rgba(255, 250, 242, 0.72);
+}
+
+.processList {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid rgba(255, 250, 242, 0.18);
+  border-radius: var(--radius-md);
+  background: rgba(255, 250, 242, 0.18);
+  list-style: none;
+}
+
+.processList li {
+  display: grid;
+  gap: 0.85rem;
+  padding: clamp(1.25rem, 3vw, 1.8rem);
+  background: rgba(255, 250, 242, 0.08);
+}
+
+.processList span {
+  color: var(--color-accent-soft);
+  font-size: 0.76rem;
+  font-weight: 850;
+  letter-spacing: 0.16em;
+}
+
+.workHeader {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.workGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.9fr 0.9fr;
+  gap: 1rem;
+}
+
+.workCard {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.workCard:first-child {
+  grid-row: span 2;
+}
+
+.workImage {
+  position: relative;
+  min-height: 18rem;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(var(--work-angle), transparent 0 50%, rgba(255, 253, 248, 0.52) 50% 100%),
+    radial-gradient(circle at 68% 28%, var(--work-secondary), transparent 8rem),
+    linear-gradient(145deg, var(--work-primary), var(--color-surface));
+  box-shadow: var(--shadow-card);
+}
+
+.workCard:first-child .workImage {
+  min-height: 100%;
+}
+
+.workImage::before,
+.workImage::after,
+.workImage span {
+  content: "";
+  position: absolute;
+  border: 1px solid rgba(32, 29, 24, 0.18);
+  background: rgba(255, 253, 248, 0.58);
+}
+
+.workImage::before {
+  width: 42%;
+  height: 52%;
+  right: 12%;
+  bottom: 12%;
+  border-radius: 50% 50% var(--radius-md) var(--radius-md);
+}
+
+.workImage::after {
+  width: 34%;
+  height: 34%;
+  left: 12%;
+  top: 14%;
+  border-radius: var(--radius-sm);
+  transform: rotate(-8deg);
+}
+
+.workImage span {
+  width: 56%;
+  height: 1px;
+  right: 12%;
+  top: 28%;
+  border: 0;
+  background: rgba(32, 29, 24, 0.28);
+  transform: rotate(8deg);
+}
+
+.workCard figcaption {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.workCard figcaption span {
+  color: var(--color-clay);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.workCard figcaption strong {
+  color: var(--color-ink);
+  font-size: 1.02rem;
+}
+
 .testimonialGrid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .testimonialCard {
@@ -212,7 +440,10 @@
 
 @media (max-width: 980px) {
   .hero,
+  .value,
   .serviceGrid,
+  .processList,
+  .workGrid,
   .testimonialGrid {
     grid-template-columns: 1fr;
   }
@@ -221,11 +452,23 @@
     min-height: auto;
     align-items: start;
   }
+
+  .workHeader {
+    display: grid;
+    justify-items: start;
+  }
+
+  .workCard:first-child {
+    grid-row: auto;
+  }
 }
 
 @media (max-width: 640px) {
   .hero,
+  .value,
   .services,
+  .process,
+  .featuredWork,
   .proof {
     width: min(100% - 2rem, var(--container-wide));
   }
@@ -246,11 +489,26 @@
     border-radius: var(--radius-md);
   }
 
+  .valueList li {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+
   .serviceCard dl div {
     display: grid;
   }
 
   .serviceCard dd {
     text-align: left;
+  }
+
+  .process::before {
+    inset-inline: -1rem;
+    border-radius: var(--radius-md);
+  }
+
+  .workImage,
+  .workCard:first-child .workImage {
+    min-height: 15rem;
   }
 }
