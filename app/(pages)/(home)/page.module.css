@@ -50,6 +50,63 @@
   line-height: 1.7;
 }
 
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.primaryLink,
+.secondaryLink,
+.serviceEntryAction {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-control);
+  padding: 12px 22px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-decoration: none;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.primaryLink {
+  border: 1px solid var(--color-accent-strong);
+  background: var(--color-accent-strong);
+  color: var(--color-surface);
+}
+
+.secondaryLink {
+  border: 1px solid rgba(56, 82, 69, 0.28);
+  background: rgba(255, 253, 248, 0.7);
+  color: var(--color-forest);
+}
+
+.primaryLink:hover {
+  background: var(--color-accent);
+  transform: translateY(-1px);
+}
+
+.secondaryLink:hover {
+  border-color: rgba(123, 63, 47, 0.38);
+  color: var(--color-accent-strong);
+  transform: translateY(-1px);
+}
+
+.primaryLink:focus-visible,
+.secondaryLink:focus-visible,
+.serviceEntryLink:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
 .expectationCard {
   border: 1px solid rgba(56, 82, 69, 0.24);
   border-radius: var(--radius-card);
@@ -94,7 +151,97 @@
   content: "";
 }
 
+.serviceEntryPanel {
+  width: min(100%, var(--page-max));
+  margin: 0 auto 24px;
+  scroll-margin-top: 18px;
+  border-top: 1px solid rgba(216, 206, 192, 0.9);
+  border-bottom: 1px solid rgba(216, 206, 192, 0.9);
+  padding: 28px 0;
+}
+
+.serviceEntryHeader {
+  display: grid;
+  gap: 8px;
+  max-width: 680px;
+  margin-bottom: 18px;
+}
+
+.serviceEntryHeader h2 {
+  margin: 0;
+  color: var(--color-text);
+  font-family: var(--font-serif);
+  font-size: 2.45rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.serviceEntryHeader p:last-child {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.serviceEntryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.serviceEntryLink {
+  display: grid;
+  min-height: 156px;
+  min-width: 0;
+  align-content: start;
+  gap: 10px;
+  border: 1px solid rgba(216, 206, 192, 0.94);
+  border-radius: var(--radius-card);
+  background: rgba(255, 253, 248, 0.68);
+  color: var(--color-text);
+  padding: 18px;
+  text-decoration: none;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.serviceEntryLink:hover {
+  border-color: rgba(123, 63, 47, 0.38);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
+}
+
+.serviceEntryName {
+  color: var(--color-text);
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  line-height: 1.05;
+}
+
+.serviceEntryMeta {
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.serviceEntryAction {
+  justify-self: start;
+  min-height: 38px;
+  margin-top: auto;
+  border: 1px solid rgba(56, 82, 69, 0.28);
+  background: rgba(241, 234, 223, 0.55);
+  color: var(--color-forest);
+  padding: 9px 14px;
+  font-size: 0.84rem;
+}
+
 .bookingPanel {
+  scroll-margin-top: 18px;
   padding: 30px;
   border: 1px solid rgba(216, 206, 192, 0.95);
   border-radius: var(--radius-large);
@@ -819,6 +966,10 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .serviceEntryGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .reviewSummary {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -870,8 +1021,19 @@
 
   .fieldGrid,
   .radioGrid,
+  .serviceEntryGrid,
   .reviewSummary {
     grid-template-columns: 1fr;
+  }
+
+  .heroActions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .primaryLink,
+  .secondaryLink {
+    width: 100%;
   }
 
   .serviceCard {
@@ -910,12 +1072,19 @@
   .fieldShell select,
   .fieldShell textarea,
   .choicePill,
+  .primaryLink,
+  .secondaryLink,
+  .serviceEntryLink,
+  .serviceEntryAction,
   .submitButton,
   .secondaryButton {
     transition: none;
   }
 
   .serviceCard:hover,
+  .primaryLink:hover,
+  .secondaryLink:hover,
+  .serviceEntryLink:hover,
   .submitButton:hover,
   .secondaryButton:hover {
     transform: none;

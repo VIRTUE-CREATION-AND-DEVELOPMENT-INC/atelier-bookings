@@ -24,10 +24,17 @@ const INITIAL_FORM_VALUES = {
 
 const getFieldErrorId = (field) => `${field}-error`;
 
-export default function ServiceSelection({ content }) {
-  const [selectedServiceId, setSelectedServiceId] = useState(
-    content.services[0]?.id || "",
+const getInitialServiceId = (services, serviceId) =>
+  services.some((service) => service.id === serviceId)
+    ? serviceId
+    : services[0]?.id || "";
+
+export default function ServiceSelection({ content, initialServiceId = "" }) {
+  const routedServiceId = getInitialServiceId(
+    content.services,
+    initialServiceId,
   );
+  const [selectedServiceId, setSelectedServiceId] = useState(routedServiceId);
   const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES);
   const [errors, setErrors] = useState({});
   const [statusMessage, setStatusMessage] = useState("");
@@ -217,6 +224,7 @@ export default function ServiceSelection({ content }) {
 
     return (
       <section
+        id="booking"
         className={styles.bookingPanel}
         aria-labelledby="inquiry-confirmation"
       >
@@ -268,7 +276,11 @@ export default function ServiceSelection({ content }) {
   }
 
   return (
-    <section className={styles.bookingPanel} aria-labelledby="service-selection">
+    <section
+      className={styles.bookingPanel}
+      id="booking"
+      aria-labelledby="service-selection"
+    >
       <form
         aria-busy={flowStep === "submitting" ? "true" : "false"}
         className={styles.inquiryForm}

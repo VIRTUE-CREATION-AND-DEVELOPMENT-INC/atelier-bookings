@@ -16,6 +16,12 @@ export const homePageContent = {
     "Timelines and investments are planning estimates from the current service model.",
     "The next steps collect project preferences and client details before mock submission.",
   ],
+  primaryCtaLabel: "Start a booking inquiry",
+  secondaryCtaLabel: "Compare services",
+  serviceEntryTitle: "Book with service context",
+  serviceEntryDescription:
+    "Choose an entry point to open the inquiry flow with the right service already selected.",
+  serviceEntryCtaLabel: "Start inquiry",
   selectorTitle: "Service selection",
   selectorDescription:
     "Compare the available studio offers and choose the strongest fit for your project.",
