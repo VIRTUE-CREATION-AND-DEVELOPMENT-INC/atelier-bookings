@@ -31,9 +31,23 @@ export const homePageContent = {
     "Dates are not held from this inquiry. The studio reviews timing, service fit, and project notes before confirming next steps.",
   successMessage:
     "Details are ready for review. The next step can confirm and submit the mock inquiry.",
+  submittingMessage: "Submitting the mock inquiry for local review...",
+  confirmationStatus:
+    "The mock inquiry is available in this browser session for review.",
   errorMessage: "Review the highlighted fields before continuing.",
   expectationConsentLabel:
     "I understand this inquiry does not reserve a date, confirm pricing, or create a paid booking.",
+  reviewTitle: "Review inquiry",
+  reviewDescription:
+    "Confirm the service, timing, contact details, and project notes before creating the mock inquiry record.",
+  confirmationTitle: "Inquiry ready for studio review",
+  confirmationDescription:
+    "This demo recorded the inquiry locally and summarized the details below. It did not send an email, collect payment, reserve a date, or guarantee availability.",
+  confirmationNextSteps: [
+    "A studio manager would review service fit, timing, budget range, and project context.",
+    "If the project is a fit, the studio would follow up through the preferred contact method you listed.",
+    "Dates, final scope, pricing, contracts, and payment would be handled only after a separate studio review.",
+  ],
   timelineOptions: TIMELINE_OPTIONS,
   scheduleFlexibilityOptions: SCHEDULE_FLEXIBILITY_OPTIONS,
   budgetRangeOptions: BUDGET_RANGE_OPTIONS,

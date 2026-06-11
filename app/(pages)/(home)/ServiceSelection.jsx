@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { submitMockBookingInquiry } from "../../../lib/bookings/mock-store.js";
 import { validateBookingInquiryInput } from "../../../lib/bookings/validation.js";
 import styles from "./page.module.css";
 
@@ -31,6 +32,11 @@ export default function ServiceSelection({ content }) {
   const [errors, setErrors] = useState({});
   const [statusMessage, setStatusMessage] = useState("");
   const [hasValidated, setHasValidated] = useState(false);
+  const [flowStep, setFlowStep] = useState("details");
+  const [reviewValues, setReviewValues] = useState(null);
+  const [submittedInquiry, setSubmittedInquiry] = useState(null);
+  const reviewRef = useRef(null);
+  const confirmationRef = useRef(null);
 
   const selectedService = useMemo(
     () =>
@@ -38,6 +44,32 @@ export default function ServiceSelection({ content }) {
       null,
     [content.services, selectedServiceId],
   );
+
+  const summaryValues = useMemo(
+    () =>
+      reviewValues || {
+        ...formValues,
+        inquiryType: "service-inquiry",
+        serviceId: selectedServiceId,
+        source: "home-booking-flow",
+      },
+    [formValues, reviewValues, selectedServiceId],
+  );
+
+  const reviewSummary = useMemo(
+    () => buildInquirySummary(content, summaryValues, selectedService),
+    [content, selectedService, summaryValues],
+  );
+
+  useEffect(() => {
+    if (flowStep === "review") {
+      reviewRef.current?.focus();
+    }
+
+    if (flowStep === "confirmed") {
+      confirmationRef.current?.focus();
+    }
+  }, [flowStep]);
 
   const getError = (field) => errors[field]?.[0] || "";
 
@@ -50,6 +82,10 @@ export default function ServiceSelection({ content }) {
   };
 
   const updateField = (field, value) => {
+    if (flowStep === "submitting") {
+      return;
+    }
+
     setFormValues((currentValues) => ({
       ...currentValues,
       [field]: value,
@@ -63,10 +99,19 @@ export default function ServiceSelection({ content }) {
       });
     }
 
+    if (flowStep === "review") {
+      setFlowStep("details");
+      setReviewValues(null);
+    }
+
     setStatusMessage("");
   };
 
   const updateSelectedService = (serviceId) => {
+    if (flowStep === "submitting") {
+      return;
+    }
+
     setSelectedServiceId(serviceId);
 
     if (hasValidated) {
@@ -77,12 +122,15 @@ export default function ServiceSelection({ content }) {
       });
     }
 
+    if (flowStep === "review") {
+      setFlowStep("details");
+      setReviewValues(null);
+    }
+
     setStatusMessage("");
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
+  const validateCurrentInquiry = () => {
     const result = validateBookingInquiryInput({
       ...formValues,
       inquiryType: "service-inquiry",
@@ -92,14 +140,141 @@ export default function ServiceSelection({ content }) {
 
     setHasValidated(true);
     setErrors(result.errors);
-    setStatusMessage(
-      result.success ? content.successMessage : content.errorMessage,
-    );
+
+    return result;
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (flowStep === "submitting") {
+      return;
+    }
+
+    const result = validateCurrentInquiry();
+
+    if (!result.success) {
+      setFlowStep("details");
+      setReviewValues(null);
+      setStatusMessage(content.errorMessage);
+      return;
+    }
+
+    if (flowStep !== "review") {
+      setReviewValues(result.values);
+      setFlowStep("review");
+      setStatusMessage(content.successMessage);
+      return;
+    }
+
+    setFlowStep("submitting");
+    setStatusMessage(content.submittingMessage);
+
+    await new Promise((resolve) => {
+      setTimeout(resolve, 450);
+    });
+
+    const submission = await submitMockBookingInquiry(result.values);
+
+    if (!submission.success) {
+      setFlowStep("details");
+      setErrors(submission.errors);
+      setStatusMessage(content.errorMessage);
+      return;
+    }
+
+    setSubmittedInquiry(submission.inquiry);
+    setReviewValues(submission.values);
+    setErrors({});
+    setStatusMessage(content.confirmationStatus);
+    setFlowStep("confirmed");
+  };
+
+  const handleEditReview = () => {
+    setFlowStep("details");
+    setStatusMessage("");
+  };
+
+  const handleStartAnother = () => {
+    setSelectedServiceId(content.services[0]?.id || "");
+    setFormValues(INITIAL_FORM_VALUES);
+    setErrors({});
+    setStatusMessage("");
+    setHasValidated(false);
+    setFlowStep("details");
+    setReviewValues(null);
+    setSubmittedInquiry(null);
+  };
+
+  if (flowStep === "confirmed" && submittedInquiry) {
+    const confirmationService =
+      submittedInquiry.serviceSnapshot || selectedService || null;
+    const confirmationSummary = buildInquirySummary(
+      content,
+      submittedInquiry.values,
+      confirmationService,
+    );
+
+    return (
+      <section
+        className={styles.bookingPanel}
+        aria-labelledby="inquiry-confirmation"
+      >
+        <article
+          className={styles.confirmationPanel}
+          ref={confirmationRef}
+          tabIndex={-1}
+        >
+          <div className={styles.confirmationHero}>
+            <p className={styles.kicker}>Mock inquiry received</p>
+            <h2 id="inquiry-confirmation">{content.confirmationTitle}</h2>
+            <p>{content.confirmationDescription}</p>
+          </div>
+
+          <div className={styles.confirmationLayout}>
+            <InquirySummary
+              heading="Inquiry summary"
+              summary={confirmationSummary}
+            />
+
+            <aside className={styles.nextStepsPanel}>
+              <p className={styles.summarySubhead}>What happens next</p>
+              <ul className={styles.nextStepsList}>
+                {content.confirmationNextSteps.map((step) => (
+                  <li key={step}>{step}</li>
+                ))}
+              </ul>
+              <p className={styles.mockReference}>
+                Mock reference: <span>{submittedInquiry.id}</span>
+              </p>
+            </aside>
+          </div>
+
+          <div className={styles.formActions}>
+            <p className={styles.formStatus} data-valid="true" aria-live="polite">
+              {statusMessage}
+            </p>
+            <button
+              className={styles.secondaryButton}
+              onClick={handleStartAnother}
+              type="button"
+            >
+              Start another inquiry
+            </button>
+          </div>
+        </article>
+      </section>
+    );
+  }
 
   return (
     <section className={styles.bookingPanel} aria-labelledby="service-selection">
-      <form className={styles.inquiryForm} onSubmit={handleSubmit} noValidate>
+      <form
+        aria-busy={flowStep === "submitting" ? "true" : "false"}
+        className={styles.inquiryForm}
+        onSubmit={handleSubmit}
+        noValidate
+      >
         <input type="hidden" name="inquiryType" value="service-inquiry" />
         <input type="hidden" name="source" value="home-booking-flow" />
 
@@ -496,20 +671,147 @@ export default function ServiceSelection({ content }) {
           </section>
         </div>
 
+        {flowStep === "review" || flowStep === "submitting" ? (
+          <section
+            className={styles.reviewPanel}
+            aria-labelledby="inquiry-review"
+            ref={reviewRef}
+            tabIndex={-1}
+          >
+            <div className={styles.formSectionHeader}>
+              <p className={styles.kicker}>Step 4 of 4</p>
+              <h3 id="inquiry-review">{content.reviewTitle}</h3>
+              <p>{content.reviewDescription}</p>
+            </div>
+
+            <InquirySummary heading="Review summary" summary={reviewSummary} />
+          </section>
+        ) : null}
+
         <div className={styles.formActions}>
           <p
             className={styles.formStatus}
-            data-valid={statusMessage === content.successMessage ? "true" : "false"}
+            data-valid={
+              statusMessage === content.successMessage ||
+              statusMessage === content.submittingMessage
+                ? "true"
+                : "false"
+            }
             aria-live="polite"
           >
             {statusMessage}
           </p>
-          <button className={styles.submitButton} type="submit">
-            Continue to review
-          </button>
+          <div className={styles.actionGroup}>
+            {flowStep === "review" || flowStep === "submitting" ? (
+              <button
+                className={styles.secondaryButton}
+                disabled={flowStep === "submitting"}
+                onClick={handleEditReview}
+                type="button"
+              >
+                Edit details
+              </button>
+            ) : null}
+            <button
+              className={styles.submitButton}
+              disabled={flowStep === "submitting"}
+              type="submit"
+            >
+              {flowStep === "review"
+                ? "Submit mock inquiry"
+                : flowStep === "submitting"
+                  ? "Submitting..."
+                  : "Continue to review"}
+            </button>
+          </div>
         </div>
       </form>
     </section>
+  );
+}
+
+function buildInquirySummary(content, values, service) {
+  const getOptionLabel = (items, id) =>
+    items.find((item) => item.id === id)?.label || "Not provided";
+
+  return [
+    {
+      label: "Service",
+      value: service?.name || "Not provided",
+    },
+    {
+      label: "Client",
+      value: values.clientName || "Not provided",
+    },
+    {
+      label: "Email",
+      value: values.email || "Not provided",
+    },
+    {
+      label: "Best contact",
+      value: getOptionLabel(content.contactMethodOptions, values.contactMethod),
+    },
+    {
+      label: "Phone",
+      value: values.phone || "Not provided",
+    },
+    {
+      label: "Company",
+      value: values.company || "Not provided",
+    },
+    {
+      label: "Project",
+      value: values.projectTitle || "Not provided",
+    },
+    {
+      label: "Location",
+      value: values.location || "Not provided",
+    },
+    {
+      label: "Preferred date",
+      value: values.eventDate || "Open",
+    },
+    {
+      label: "Preferred time",
+      value: values.preferredTime || "Open",
+    },
+    {
+      label: "Timeline",
+      value: getOptionLabel(content.timelineOptions, values.timeline),
+    },
+    {
+      label: "Schedule flexibility",
+      value: getOptionLabel(
+        content.scheduleFlexibilityOptions,
+        values.scheduleFlexibility,
+      ),
+    },
+    {
+      label: "Estimated budget",
+      value: getOptionLabel(content.budgetRangeOptions, values.budgetRange),
+    },
+    {
+      label: "Project notes",
+      value: values.message || "Not provided",
+      wide: true,
+    },
+  ];
+}
+
+function InquirySummary({ heading, summary }) {
+  return (
+    <dl className={styles.reviewSummary} aria-label={heading}>
+      {summary.map((item) => (
+        <div
+          className={styles.reviewItem}
+          data-wide={item.wide ? "true" : "false"}
+          key={item.label}
+        >
+          <dt>{item.label}</dt>
+          <dd>{item.value}</dd>
+        </div>
+      ))}
+    </dl>
   );
 }
 
