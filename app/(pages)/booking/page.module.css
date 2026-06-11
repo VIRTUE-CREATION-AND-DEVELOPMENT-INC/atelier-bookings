@@ -719,7 +719,9 @@
 
 .reviewPanel:focus,
 .confirmationPanel:focus {
-  outline: none;
+  border-radius: var(--radius-card);
+  outline: 3px solid var(--color-focus);
+  outline-offset: 6px;
 }
 
 .reviewSummary {
