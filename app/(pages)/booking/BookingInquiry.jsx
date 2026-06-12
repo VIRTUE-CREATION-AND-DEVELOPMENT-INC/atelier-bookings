@@ -68,6 +68,11 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
     [content, selectedService, summaryValues],
   );
 
+  const bookingActionSummary = useMemo(
+    () => buildBookingActionSummary(summaryValues, selectedService),
+    [selectedService, summaryValues],
+  );
+
   useEffect(() => {
     if (flowStep === "review") {
       reviewRef.current?.focus();
@@ -700,6 +705,11 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
           </section>
         ) : null}
 
+        <BookingActionSummary
+          content={content}
+          summary={bookingActionSummary}
+        />
+
         <div className={styles.formActions}>
           <p
             className={styles.formStatus}
@@ -740,6 +750,23 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
       </form>
     </section>
   );
+}
+
+function buildBookingActionSummary(values, service) {
+  return [
+    {
+      label: "Service",
+      value: service?.name || "Not selected",
+    },
+    {
+      label: "Preferred date",
+      value: values.eventDate || "Open",
+    },
+    {
+      label: "Preferred time",
+      value: values.preferredTime || "Open",
+    },
+  ];
 }
 
 function buildInquirySummary(content, values, service) {
@@ -808,6 +835,30 @@ function buildInquirySummary(content, values, service) {
       wide: true,
     },
   ];
+}
+
+function BookingActionSummary({ content, summary }) {
+  return (
+    <section
+      className={styles.bookingActionSummary}
+      aria-labelledby="booking-action-summary"
+    >
+      <div>
+        <p className={styles.kicker}>Before review</p>
+        <h3 id="booking-action-summary">{content.bookingSummaryTitle}</h3>
+        <p>{content.bookingSummaryDescription}</p>
+      </div>
+
+      <dl className={styles.bookingActionList}>
+        {summary.map((item) => (
+          <div key={item.label}>
+            <dt>{item.label}</dt>
+            <dd>{item.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  );
 }
 
 function InquirySummary({ heading, summary }) {

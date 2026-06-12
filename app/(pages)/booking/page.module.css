@@ -850,6 +850,67 @@
   overflow-wrap: anywhere;
 }
 
+.bookingActionSummary {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.85fr) minmax(0, 1.5fr);
+  gap: 18px;
+  align-items: center;
+  border-top: 1px solid rgba(216, 206, 192, 0.9);
+  padding-top: 24px;
+}
+
+.bookingActionSummary h3 {
+  margin: 0;
+  color: var(--color-text);
+  font-family: var(--font-serif);
+  font-size: 1.55rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.05;
+}
+
+.bookingActionSummary p:last-child {
+  margin: 8px 0 0;
+  color: var(--color-muted);
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.bookingActionList {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.bookingActionList div {
+  display: grid;
+  min-width: 0;
+  gap: 6px;
+  border: 1px solid rgba(56, 82, 69, 0.18);
+  border-radius: var(--radius-card);
+  background: rgba(238, 242, 237, 0.7);
+  padding: 14px;
+}
+
+.bookingActionList dt {
+  color: var(--color-muted);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.bookingActionList dd {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 0.96rem;
+  font-weight: 800;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
 .formActions {
   display: flex;
   flex-wrap: wrap;
@@ -975,6 +1036,10 @@
   .reviewSummary {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .bookingActionSummary {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 720px) {
@@ -1024,6 +1089,7 @@
   .fieldGrid,
   .radioGrid,
   .serviceEntryGrid,
+  .bookingActionList,
   .reviewSummary {
     grid-template-columns: 1fr;
   }

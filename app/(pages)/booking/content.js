@@ -35,6 +35,9 @@ export const homePageContent = {
     "Add the contact and project context the studio needs before reviewing fit.",
   formIntro:
     "Dates are not held from this inquiry. The studio reviews timing, service fit, and project notes before confirming next steps.",
+  bookingSummaryTitle: "Selected booking details",
+  bookingSummaryDescription:
+    "Check the service and preferred timing before continuing to review.",
   successMessage:
     "Details are ready for review. The next step can confirm and submit the mock inquiry.",
   submittingMessage: "Submitting the mock inquiry for local review...",
