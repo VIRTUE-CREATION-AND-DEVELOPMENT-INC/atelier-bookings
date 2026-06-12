@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { forwardRef, useEffect, useMemo, useRef, useState } from "react";
 import { submitMockBookingInquiry } from "../../../lib/bookings/mock-store.js";
 import { validateBookingInquiryInput } from "../../../lib/bookings/validation.js";
 import styles from "./page.module.css";
@@ -23,6 +23,28 @@ const INITIAL_FORM_VALUES = {
 };
 
 const getFieldErrorId = (field) => `${field}-error`;
+const FIELD_LABELS = {
+  serviceId: "Service",
+  eventDate: "Preferred date",
+  preferredTime: "Preferred time",
+  timeline: "Project timeline",
+  budgetRange: "Estimated budget",
+  scheduleFlexibility: "Schedule flexibility",
+  clientName: "Name",
+  email: "Email",
+  phone: "Phone",
+  contactMethod: "Best contact",
+  company: "Company",
+  projectTitle: "Project title",
+  location: "Location",
+  message: "Project notes",
+  expectationConsent: "Booking acknowledgement",
+};
+const FIELD_TARGET_IDS = {
+  serviceId: "service-selection-options",
+  scheduleFlexibility: "scheduleFlexibility-options",
+};
+const getFieldTargetId = (field) => FIELD_TARGET_IDS[field] || field;
 
 const getInitialServiceId = (services, serviceId) =>
   services.some((service) => service.id === serviceId)
@@ -44,6 +66,8 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
   const [submittedInquiry, setSubmittedInquiry] = useState(null);
   const reviewRef = useRef(null);
   const confirmationRef = useRef(null);
+  const validationSummaryRef = useRef(null);
+  const isSubmitting = flowStep === "submitting";
 
   const selectedService = useMemo(
     () =>
@@ -83,7 +107,22 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
     }
   }, [flowStep]);
 
+  useEffect(() => {
+    if (
+      statusMessage === content.errorMessage &&
+      Object.keys(errors).length > 0
+    ) {
+      validationSummaryRef.current?.focus();
+    }
+  }, [content.errorMessage, errors, statusMessage]);
+
   const getError = (field) => errors[field]?.[0] || "";
+  const statusTone =
+    statusMessage === content.errorMessage
+      ? "error"
+      : statusMessage
+        ? "success"
+        : "idle";
 
   const getDescribedBy = (field, helperId) => {
     const descriptionIds = [helperId, getError(field) && getFieldErrorId(field)]
@@ -94,7 +133,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
   };
 
   const updateField = (field, value) => {
-    if (flowStep === "submitting") {
+    if (isSubmitting) {
       return;
     }
 
@@ -120,7 +159,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
   };
 
   const updateSelectedService = (serviceId) => {
-    if (flowStep === "submitting") {
+    if (isSubmitting) {
       return;
     }
 
@@ -159,7 +198,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (flowStep === "submitting") {
+    if (isSubmitting) {
       return;
     }
 
@@ -264,7 +303,13 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
           </div>
 
           <div className={styles.formActions}>
-            <p className={styles.formStatus} data-valid="true" aria-live="polite">
+            <p
+              className={styles.formStatus}
+              data-status="success"
+              role="status"
+              aria-atomic="true"
+              aria-live="polite"
+            >
               {statusMessage}
             </p>
             <button
@@ -287,7 +332,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
       aria-labelledby="service-selection"
     >
       <form
-        aria-busy={flowStep === "submitting" ? "true" : "false"}
+        aria-busy={isSubmitting ? "true" : "false"}
         className={styles.inquiryForm}
         onSubmit={handleSubmit}
         noValidate
@@ -303,8 +348,10 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
 
         <div className={styles.selectionLayout}>
           <fieldset
+            id="service-selection-options"
             className={styles.serviceFieldset}
             aria-describedby={getDescribedBy("serviceId")}
+            disabled={isSubmitting}
           >
             <legend className={styles.visuallyHidden}>Choose a service</legend>
 
@@ -438,6 +485,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
                     "eventDate-helper",
                   )}
                   aria-invalid={Boolean(getError("eventDate"))}
+                  disabled={isSubmitting}
                   id="eventDate"
                   name="eventDate"
                   onChange={(event) =>
@@ -460,6 +508,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
                     "preferredTime-helper",
                   )}
                   aria-invalid={Boolean(getError("preferredTime"))}
+                  disabled={isSubmitting}
                   id="preferredTime"
                   name="preferredTime"
                   onChange={(event) =>
@@ -478,6 +527,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
                 <select
                   aria-describedby={getDescribedBy("timeline")}
                   aria-invalid={Boolean(getError("timeline"))}
+                  disabled={isSubmitting}
                   id="timeline"
                   name="timeline"
                   onChange={(event) => updateField("timeline", event.target.value)}
@@ -500,6 +550,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
                 <select
                   aria-describedby={getDescribedBy("budgetRange")}
                   aria-invalid={Boolean(getError("budgetRange"))}
+                  disabled={isSubmitting}
                   id="budgetRange"
                   name="budgetRange"
                   onChange={(event) =>
@@ -519,6 +570,8 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
 
             <fieldset
               className={styles.radioFieldset}
+              disabled={isSubmitting}
+              id="scheduleFlexibility-options"
               aria-describedby={getDescribedBy("scheduleFlexibility")}
             >
               <legend>Schedule flexibility</legend>
@@ -555,6 +608,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
                   aria-describedby={getDescribedBy("clientName")}
                   aria-invalid={Boolean(getError("clientName"))}
                   autoComplete="name"
+                  disabled={isSubmitting}
                   id="clientName"
                   name="clientName"
                   onChange={(event) =>
@@ -570,6 +624,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
                   aria-describedby={getDescribedBy("email")}
                   aria-invalid={Boolean(getError("email"))}
                   autoComplete="email"
+                  disabled={isSubmitting}
                   id="email"
                   name="email"
                   onChange={(event) => updateField("email", event.target.value)}
@@ -588,6 +643,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
                   aria-describedby={getDescribedBy("phone", "phone-helper")}
                   aria-invalid={Boolean(getError("phone"))}
                   autoComplete="tel"
+                  disabled={isSubmitting}
                   id="phone"
                   name="phone"
                   onChange={(event) => updateField("phone", event.target.value)}
@@ -600,6 +656,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
                 <select
                   aria-describedby={getDescribedBy("contactMethod")}
                   aria-invalid={Boolean(getError("contactMethod"))}
+                  disabled={isSubmitting}
                   id="contactMethod"
                   name="contactMethod"
                   onChange={(event) =>
@@ -620,6 +677,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
                   aria-describedby={getDescribedBy("company")}
                   aria-invalid={Boolean(getError("company"))}
                   autoComplete="organization"
+                  disabled={isSubmitting}
                   id="company"
                   name="company"
                   onChange={(event) => updateField("company", event.target.value)}
@@ -632,6 +690,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
                 <input
                   aria-describedby={getDescribedBy("projectTitle")}
                   aria-invalid={Boolean(getError("projectTitle"))}
+                  disabled={isSubmitting}
                   id="projectTitle"
                   name="projectTitle"
                   onChange={(event) =>
@@ -646,6 +705,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
                 <input
                   aria-describedby={getDescribedBy("location")}
                   aria-invalid={Boolean(getError("location"))}
+                  disabled={isSubmitting}
                   id="location"
                   name="location"
                   onChange={(event) => updateField("location", event.target.value)}
@@ -665,6 +725,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
               <textarea
                 aria-describedby={getDescribedBy("message", "message-helper")}
                 aria-invalid={Boolean(getError("message"))}
+                disabled={isSubmitting}
                 id="message"
                 name="message"
                 onChange={(event) => updateField("message", event.target.value)}
@@ -676,6 +737,10 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
             <label className={styles.consentRow}>
               <input
                 checked={formValues.expectationConsent}
+                aria-describedby={getDescribedBy("expectationConsent")}
+                aria-invalid={Boolean(getError("expectationConsent"))}
+                disabled={isSubmitting}
+                id="expectationConsent"
                 name="expectationConsent"
                 onChange={(event) =>
                   updateField("expectationConsent", event.target.checked)
@@ -710,16 +775,15 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
           summary={bookingActionSummary}
         />
 
+        <ValidationSummary errors={errors} ref={validationSummaryRef} />
+
         <div className={styles.formActions}>
           <p
             className={styles.formStatus}
-            data-valid={
-              statusMessage === content.successMessage ||
-              statusMessage === content.submittingMessage
-                ? "true"
-                : "false"
-            }
-            aria-live="polite"
+            data-status={statusTone}
+            role={statusTone === "error" ? "alert" : "status"}
+            aria-atomic="true"
+            aria-live={statusTone === "error" ? "assertive" : "polite"}
           >
             {statusMessage}
           </p>
@@ -727,7 +791,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
             {flowStep === "review" || flowStep === "submitting" ? (
               <button
                 className={styles.secondaryButton}
-                disabled={flowStep === "submitting"}
+                disabled={isSubmitting}
                 onClick={handleEditReview}
                 type="button"
               >
@@ -736,13 +800,13 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
             ) : null}
             <button
               className={styles.submitButton}
-              disabled={flowStep === "submitting"}
+              disabled={isSubmitting}
               type="submit"
             >
               {flowStep === "review"
                 ? "Submit mock inquiry"
-                : flowStep === "submitting"
-                  ? "Submitting..."
+                : isSubmitting
+                  ? "Submitting inquiry..."
                   : "Continue to review"}
             </button>
           </div>
@@ -751,6 +815,47 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
     </section>
   );
 }
+
+const ValidationSummary = forwardRef(function ValidationSummary(
+  { errors },
+  ref,
+) {
+  const errorItems = Object.entries(errors)
+    .map(([field, fieldErrors]) => ({
+      field,
+      label: FIELD_LABELS[field] || field,
+      message: fieldErrors?.[0] || "",
+      targetId: getFieldTargetId(field),
+    }))
+    .filter((item) => item.message);
+
+  if (errorItems.length === 0) {
+    return null;
+  }
+
+  return (
+    <section
+      className={styles.validationSummary}
+      aria-labelledby="booking-validation-summary"
+      ref={ref}
+      tabIndex={-1}
+    >
+      <h3 id="booking-validation-summary">
+        Review {errorItems.length} field
+        {errorItems.length === 1 ? "" : "s"} before continuing
+      </h3>
+      <ul>
+        {errorItems.map((item) => (
+          <li key={item.field}>
+            <a href={`#${item.targetId}`}>
+              {item.label}: {item.message}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+});
 
 function buildBookingActionSummary(values, service) {
   return [

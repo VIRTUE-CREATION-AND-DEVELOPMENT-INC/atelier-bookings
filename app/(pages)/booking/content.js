@@ -39,11 +39,11 @@ export const homePageContent = {
   bookingSummaryDescription:
     "Check the service and preferred timing before continuing to review.",
   successMessage:
-    "Details are ready for review. The next step can confirm and submit the mock inquiry.",
-  submittingMessage: "Submitting the mock inquiry for local review...",
+    "Details are ready for review. Check the summary, then submit the mock inquiry when everything looks right.",
+  submittingMessage: "Submitting the mock inquiry. Please wait before editing details.",
   confirmationStatus:
-    "The mock inquiry is available in this browser session for review.",
-  errorMessage: "Review the highlighted fields before continuing.",
+    "The mock inquiry was recorded locally and is ready for studio review.",
+  errorMessage: "Review the listed fields before continuing.",
   expectationConsentLabel:
     "I understand this inquiry does not reserve a date, confirm pricing, or create a paid booking.",
   reviewTitle: "Review inquiry",

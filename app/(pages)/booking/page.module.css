@@ -930,8 +930,47 @@
   line-height: 1.45;
 }
 
-.formStatus[data-valid="true"] {
+.formStatus[data-status="success"] {
   color: var(--color-forest);
+}
+
+.formStatus[data-status="error"] {
+  color: var(--color-clay);
+}
+
+.validationSummary {
+  border: 1px solid rgba(184, 111, 79, 0.34);
+  border-radius: var(--radius-card);
+  background: rgba(184, 111, 79, 0.08);
+  padding: 18px;
+}
+
+.validationSummary:focus {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.validationSummary h3 {
+  margin: 0 0 10px;
+  color: var(--color-ink);
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.validationSummary ul {
+  display: grid;
+  gap: 8px;
+  padding-left: 1.15rem;
+  margin: 0;
+  color: var(--color-clay);
+  font-size: 0.94rem;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.validationSummary a {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
 }
 
 .actionGroup {
