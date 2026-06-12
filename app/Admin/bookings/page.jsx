@@ -62,7 +62,13 @@ function BookingDetailPanel({ booking }) {
         <div className={styles.emptyState}>
           <p className={styles.eyebrow}>Detail view</p>
           <h2 id="booking-detail-title">No inquiry selected</h2>
-          <p>Adjust the inbox filters or search terms to find a booking inquiry.</p>
+          <p>
+            Broaden the filters or reset the inbox to bring back a booking preview with client,
+            timing, service, and note context.
+          </p>
+          <Link className={styles.panelBadge} href="/Admin/bookings">
+            Reset inbox
+          </Link>
         </div>
       </aside>
     );
@@ -99,20 +105,45 @@ function BookingDetailPanel({ booking }) {
           <strong>{booking.lastContactedLabel}</strong>
           <small>{booking.repliedLabel}</small>
         </div>
+        <div>
+          <span>Priority</span>
+          <strong>{booking.priority} priority</strong>
+          <small>{booking.status.description}</small>
+        </div>
+        <div>
+          <span>Source</span>
+          <strong>{booking.source}</strong>
+          <small>Created {booking.createdAtLabel}</small>
+        </div>
       </div>
 
       <div className={styles.detailBlock}>
-        <h3>Client summary</h3>
+        <div className={styles.detailBlockHeader}>
+          <h3>Client summary</h3>
+          <span>Contact context</span>
+        </div>
         <p>{booking.message}</p>
-        <ul className={styles.contactList}>
-          <li>{booking.client.email}</li>
-          <li>{booking.client.phone}</li>
-          <li>{booking.client.location}</li>
-        </ul>
+        <dl className={styles.compactMetaList}>
+          <div>
+            <dt>Email</dt>
+            <dd>{booking.client.email}</dd>
+          </div>
+          <div>
+            <dt>Phone</dt>
+            <dd>{booking.client.phone}</dd>
+          </div>
+          <div>
+            <dt>Location</dt>
+            <dd>{booking.client.location}</dd>
+          </div>
+        </dl>
       </div>
 
       <div className={styles.detailBlock}>
-        <h3>Service fit</h3>
+        <div className={styles.detailBlockHeader}>
+          <h3>Service fit</h3>
+          <span>{booking.service.durationLabel}</span>
+        </div>
         <p>
           {booking.service.name} / {booking.service.category}
         </p>
@@ -124,7 +155,10 @@ function BookingDetailPanel({ booking }) {
       </div>
 
       <div className={styles.detailBlock}>
-        <h3>Internal note</h3>
+        <div className={styles.detailBlockHeader}>
+          <h3>Internal note</h3>
+          <span>Studio-only</span>
+        </div>
         <p>{booking.internalNotes}</p>
       </div>
 
@@ -300,7 +334,10 @@ export default async function BookingInboxPage({ searchParams }) {
             <div className={styles.emptyState}>
               <p className={styles.eyebrow}>No matches</p>
               <h2>No booking inquiries found</h2>
-              <p>Try another search term or switch back to all statuses.</p>
+              <p>
+                No active inquiry matches the current search and status filters. Reset the inbox to
+                review the full mock queue again.
+              </p>
               <Link className={styles.panelBadge} href="/Admin/bookings">
                 Reset inbox
               </Link>

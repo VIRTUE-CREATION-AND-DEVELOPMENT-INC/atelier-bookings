@@ -536,7 +536,9 @@
 .bookingMeta,
 .detailMetaGrid span,
 .detailMetaGrid small,
-.contactList,
+.compactMetaList dt,
+.compactMetaList dd,
+.detailBlockHeader span,
 .tagList span {
   color: #72695d;
 }
@@ -545,7 +547,9 @@
 .searchField span,
 .bookingTableHead,
 .cellLabel,
-.detailMetaGrid span {
+.detailMetaGrid span,
+.compactMetaList dt,
+.detailBlockHeader span {
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -931,6 +935,13 @@
   padding-top: 1rem;
 }
 
+.detailBlockHeader {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
 .detailBlock h3 {
   color: #28231d;
   font-size: 1rem;
@@ -942,12 +953,30 @@
   line-height: 1.58;
 }
 
-.contactList {
+.compactMetaList {
   display: grid;
-  gap: 0.35rem;
+  gap: 0.5rem;
   margin: 0;
-  padding-left: 1rem;
-  line-height: 1.45;
+}
+
+.compactMetaList div {
+  min-width: 0;
+  display: grid;
+  gap: 0.18rem;
+  border-left: 2px solid rgba(52, 87, 73, 0.24);
+  padding-left: 0.65rem;
+}
+
+.compactMetaList dt,
+.compactMetaList dd {
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+
+.compactMetaList dd {
+  margin: 0;
+  color: #28231d;
+  font-weight: 800;
 }
 
 .tagList {
@@ -1104,7 +1133,8 @@
 .reviewList dt,
 .localStatusNotice small,
 .statusChoice small,
-.relatedList span {
+.relatedList span,
+.detailTagGroup span {
   color: #72695d;
 }
 
@@ -1132,6 +1162,27 @@
 
 .emptyCopy {
   font-size: 0.95rem;
+}
+
+.detailTagGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  border-top: 1px solid rgba(66, 53, 40, 0.1);
+  padding-top: 0.9rem;
+}
+
+.detailTagGroup span {
+  width: fit-content;
+  max-width: 100%;
+  border: 1px solid rgba(52, 87, 73, 0.18);
+  border-radius: 999px;
+  padding: 0.38rem 0.58rem;
+  background: rgba(52, 87, 73, 0.08);
+  color: #1f4d3d;
+  font-size: 0.75rem;
+  font-weight: 850;
+  line-height: 1.15;
 }
 
 .noteStack div {

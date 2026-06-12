@@ -83,8 +83,8 @@ export default async function BookingDetailPage({ params }) {
           <p className={styles.eyebrow}>Missing record</p>
           <h2 id="booking-error-title">No active booking matches this detail URL</h2>
           <p>
-            The record may be archived in the mock data or the URL may contain an invalid booking
-            ID.
+            This mock detail is not in the active queue. Return to the inbox to choose a visible
+            inquiry and keep the review context intact.
           </p>
           <Link className={styles.panelBadge} href="/Admin/bookings">
             Return to all inquiries
@@ -152,9 +152,17 @@ export default async function BookingDetailPage({ params }) {
                 { label: "Email", value: booking.client.email },
                 { label: "Phone", value: booking.client.phone },
                 { label: "Location", value: booking.client.location },
-                { label: "Tags", value: booking.client.tags.join(", ") },
               ]}
             />
+            {booking.client.tags.length ? (
+              <div className={styles.detailTagGroup} aria-label="Client tags">
+                {booking.client.tags.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
+            ) : (
+              <p className={styles.emptyCopy}>No client tags are attached to this inquiry.</p>
+            )}
           </article>
 
           <article className={styles.panel} aria-labelledby="service-review-title">
