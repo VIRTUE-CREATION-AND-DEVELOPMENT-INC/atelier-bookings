@@ -6,7 +6,7 @@ import styles from "./page.module.css";
 export const metadata = {
   title: "Booking Inquiry | Atelier Bookings",
   description:
-    "Start a mock creative studio booking inquiry with service selection, preferences, client details, review, and confirmation.",
+    "Start a studio booking inquiry for Brand Session, Content Day, or Creative Consult services.",
 };
 
 const getBookingHref = (serviceId) =>
