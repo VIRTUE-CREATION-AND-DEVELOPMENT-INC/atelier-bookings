@@ -239,6 +239,8 @@ export default async function BookingInboxPage({ searchParams }) {
                     key={booking.id}
                   >
                     <div className={styles.bookingMain}>
+                      <span className={styles.cellLabel}>Client</span>
+                      <strong className={styles.bookingClientName}>{booking.client.company}</strong>
                       <Link
                         href={getInboxHref({
                           query: content.query,
@@ -248,13 +250,13 @@ export default async function BookingInboxPage({ searchParams }) {
                       >
                         {booking.projectName}
                       </Link>
-                      <span>{booking.client.company}</span>
                       <small>
                         {booking.client.contactName} / {booking.client.location}
                       </small>
                     </div>
 
                     <div className={styles.labelStack}>
+                      <span className={styles.cellLabel}>Service</span>
                       <span className={styles.servicePill}>{booking.service.name}</span>
                       <small>
                         {booking.service.category} / {booking.service.durationLabel}
@@ -262,13 +264,16 @@ export default async function BookingInboxPage({ searchParams }) {
                     </div>
 
                     <div className={styles.valueStack}>
+                      <span className={styles.cellLabel}>Preferred date</span>
                       <time dateTime={booking.desiredDate.dateTime}>
                         {booking.desiredDate.shortLabel}
                       </time>
-                      <small>{booking.estimatedValue}</small>
+                      <small>{booking.timelineLabel}</small>
+                      <strong>{booking.estimatedValue}</strong>
                     </div>
 
                     <div className={styles.bookingStatusCell}>
+                      <span className={styles.cellLabel}>Status</span>
                       <StatusBadge status={booking.status} />
                       <span
                         className={`${styles.priorityPill} ${
@@ -277,6 +282,7 @@ export default async function BookingInboxPage({ searchParams }) {
                       >
                         {booking.priority} priority
                       </span>
+                      <small>{booking.status.description}</small>
                     </div>
 
                     <p className={styles.bookingMessage}>{booking.message}</p>
