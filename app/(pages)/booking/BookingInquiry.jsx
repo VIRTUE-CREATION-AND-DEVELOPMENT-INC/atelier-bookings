@@ -703,6 +703,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
         <div className={styles.formActions}>
           <p
             className={styles.formStatus}
+            role="status"
             data-valid={
               statusMessage === content.successMessage ||
               statusMessage === content.submittingMessage
@@ -718,6 +719,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
               <button
                 className={styles.secondaryButton}
                 disabled={flowStep === "submitting"}
+                aria-disabled={flowStep === "submitting"}
                 onClick={handleEditReview}
                 type="button"
               >
@@ -727,6 +729,7 @@ export default function ServiceSelection({ content, initialServiceId = "" }) {
             <button
               className={styles.submitButton}
               disabled={flowStep === "submitting"}
+              aria-disabled={flowStep === "submitting"}
               type="submit"
             >
               {flowStep === "review"

@@ -62,13 +62,16 @@
 .serviceEntryAction {
   display: inline-flex;
   min-height: 48px;
+  min-width: 0;
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-control);
   padding: 12px 22px;
   font-weight: 800;
   line-height: 1.2;
+  text-align: center;
   text-decoration: none;
+  overflow-wrap: anywhere;
   transition:
     border-color 160ms ease,
     background-color 160ms ease,
@@ -220,6 +223,7 @@
   font-family: var(--font-serif);
   font-size: 1.35rem;
   line-height: 1.05;
+  overflow-wrap: anywhere;
 }
 
 .serviceEntryMeta {
@@ -227,6 +231,7 @@
   font-size: 0.88rem;
   font-weight: 700;
   line-height: 1.45;
+  overflow-wrap: anywhere;
 }
 
 .serviceEntryAction {
@@ -370,6 +375,7 @@
   font-weight: 500;
   letter-spacing: 0;
   line-height: 1;
+  overflow-wrap: anywhere;
 }
 
 .cardSummary {
@@ -413,6 +419,7 @@
 .fitList span {
   display: inline-flex;
   min-height: 32px;
+  min-width: 0;
   align-items: center;
   border: 1px solid rgba(56, 82, 69, 0.22);
   border-radius: var(--radius-control);
@@ -422,6 +429,7 @@
   font-size: 0.78rem;
   font-weight: 700;
   line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 
 .selectionSummary {
@@ -570,6 +578,7 @@
 .fieldShell select,
 .fieldShell textarea {
   width: 100%;
+  min-width: 0;
   min-height: 48px;
   border: 1px solid rgba(109, 102, 93, 0.34);
   border-radius: var(--radius-large);
@@ -861,6 +870,7 @@
 }
 
 .formStatus {
+  flex: 1 1 18rem;
   min-height: 1.4em;
   margin: 0;
   color: var(--color-accent-strong);
@@ -883,11 +893,14 @@
 .submitButton,
 .secondaryButton {
   min-height: 48px;
+  min-width: 0;
   border-radius: var(--radius-control);
   cursor: pointer;
   padding: 12px 22px;
   font-weight: 800;
   line-height: 1.2;
+  text-align: center;
+  overflow-wrap: anywhere;
   transition:
     border-color 160ms ease,
     background-color 160ms ease,
@@ -927,6 +940,7 @@
 
 .submitButton:disabled,
 .secondaryButton:disabled {
+  box-shadow: none;
   cursor: not-allowed;
   opacity: 0.62;
   transform: none;
